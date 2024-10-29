@@ -78,6 +78,7 @@ void generate_grid(
 	vertices->clear();
 	indices->clear();
 
+	// Code here
 }
 
 /*
