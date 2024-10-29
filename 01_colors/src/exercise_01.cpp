@@ -16,6 +16,8 @@ void draw_triangles(
 	std::vector<glm::vec3> const& vertices,
 	std::vector<glm::vec3> const& colors)
 {
+	cg_assert(vertices.size() == colors.size());
+	cg_assert(vertices.size() % 3 == 0);
 
 	for (int i =0 ; i < static_cast<int>(vertices.size())/3; ++i)
 	{
@@ -31,8 +33,6 @@ void draw_triangles(
 
 		glEnd();
 	}
-	cg_assert(vertices.size() == colors.size());
-	cg_assert(vertices.size() % 3 == 0);
 
 }
 
