@@ -77,8 +77,22 @@ void generate_grid(
 
 	vertices->clear();
 	indices->clear();
-
 	// Code here
+	float subPoint = 1.0f/ static_cast<float>(N);
+	for (uint32_t i =0; i <= N; ++i) {
+		for (uint32_t j =0; j <= N; ++j) {
+			glm::vec3 pointInSpace = glm::vec3(j*subPoint,i*subPoint,0.0);
+			vertices->push_back(pointInSpace);
+		}
+	}
+	for (uint32_t i =0; i < N; ++i) {
+		for (uint32_t j =0; j < N; ++j) {
+			glm::uvec3 upsideTriangle = glm::uvec3(i*N+j,i*N+j+1,(i+1)*N+j);
+			glm::uvec3 downsideTriangle = glm::uvec3(i*N+j+1,(i+1)*N+j+1,(i+1)*N+j);
+			indices->push_back(upsideTriangle);
+			indices->push_back(downsideTriangle);
+		}
+	}
 }
 
 /*
@@ -95,6 +109,15 @@ void draw_indexed_triangles(
 {
 	cg_assert(vertices.size() == colors.size());
 
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, vertices.data());
+	glColorPointer(3, GL_FLOAT, 0, colors.data());
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data());
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 /*
