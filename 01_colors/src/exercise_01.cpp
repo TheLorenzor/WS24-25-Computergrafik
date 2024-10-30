@@ -78,6 +78,7 @@ void generate_grid(
 	vertices->clear();
 	indices->clear();
 	// Code here
+
 	float subPoint = 1.0f/ static_cast<float>(N);
 	for (uint32_t i =0; i <= N; ++i) {
 		for (uint32_t j =0; j <= N; ++j) {
@@ -87,8 +88,9 @@ void generate_grid(
 	}
 	for (uint32_t i =0; i < N; ++i) {
 		for (uint32_t j =0; j < N; ++j) {
-			glm::uvec3 upsideTriangle = glm::uvec3(i*N+j,i*N+j+1,(i+1)*N+j);
-			glm::uvec3 downsideTriangle = glm::uvec3(i*N+j+1,(i+1)*N+j+1,(i+1)*N+j);
+			uint32_t n = N+1;
+			glm::uvec3 upsideTriangle = glm::uvec3(i*n+j,i*n+j+1,(i+1)*n+j);
+			glm::uvec3 downsideTriangle = glm::uvec3(i*n+j+1,(i+1)*n+j+1,(i+1)*n+j);
 			indices->push_back(upsideTriangle);
 			indices->push_back(downsideTriangle);
 		}
@@ -114,7 +116,7 @@ void draw_indexed_triangles(
 
 	glVertexPointer(3, GL_FLOAT, 0, vertices.data());
 	glColorPointer(3, GL_FLOAT, 0, colors.data());
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data());
+	glDrawElements(GL_TRIANGLES, indices.size()*3, GL_UNSIGNED_INT, indices.data());
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
