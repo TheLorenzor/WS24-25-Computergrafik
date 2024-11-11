@@ -135,11 +135,11 @@ void draw_indexed_triangles(
  *
  * An example for N = 3:
  *
- *   ^
+ *   ^  (0,1,0)
  *   |  ----------
  *   |  | /| /| /|
  * y |  |/ |/ |/ |
- *   |  ----------
+ *   |  ---------- (1,0,0)
  *   |
  *   |-------------->
  *           x
@@ -153,7 +153,16 @@ void generate_strip(
 	cg_assert(vertices);
 
 	vertices->clear();
-
+	//N=1;
+	float subPointDistance = 1.0f / static_cast<float>(N);
+	vertices->push_back(glm::vec3(0,1,0));
+	vertices->push_back(glm::vec3(0,0,0));
+	vertices->push_back(glm::vec3(subPointDistance,1,0));
+	for (uint32_t i =0; i < N-1; ++i) {
+		vertices->push_back(glm::vec3(static_cast<float>(i+1)*subPointDistance,0,0));
+		vertices->push_back(glm::vec3(static_cast<float>(i+2)*subPointDistance,1,0));
+	}
+	vertices->push_back(glm::vec3(1,0,0));
 }
 
 /*
@@ -166,6 +175,13 @@ void draw_triangle_strip(
 {
 	cg_assert(vertices.size() == colors.size());
 
+	glBegin(GL_TRIANGLE_STRIP);
+	for (int i =0; i < static_cast<int>(vertices.size()); ++i)
+	{
+		glVertex3f(vertices[i].x,vertices[i].y,vertices[i].z);
+		glColor3f(colors[i].x,colors[i].y,colors[i].z);
+	}
+	glEnd();
 }
 
 /*
@@ -184,7 +200,13 @@ float integrate_trapezoidal_student(
 	cg_assert(x.size() == y.size());
 	cg_assert(x.size() > 1);
 
-	return 0.f;
+	float sumOfAll = 0.0;
+
+	for (uint32_t i =0; i+1 < x.size(); ++i)
+	{
+		sumOfAll += y[i] * y[i+1] /2.0*(x[i+1] - x[i]);
+	}
+	return sumOfAll;
 }
 
 /*
@@ -203,7 +225,11 @@ float integrate_trapezoidal_student(
 glm::vec3 spectrum_to_rgb(std::vector<float> const& spectrum)
 {
 	cg_assert(spectrum.size() == cmf::wavelengths.size());
+	float x = integrate_trapezoidal_student(cmf::x,spectrum);
+	float y = integrate_trapezoidal_student(cmf::y,spectrum);
+	float z = integrate_trapezoidal_student(cmf::z,spectrum);
 
-	return glm::vec3(0.f);
+	return convert::xyy_to_rgb(glm::vec3(x,y,z));
 }
 // CG_REVISION 8c58412a25ac2367c053bfa840ee81b320bdd315
+
