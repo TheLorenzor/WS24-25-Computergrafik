@@ -3,3 +3,4 @@ cglib
 build
 cg
 *.exe
+*.yaml
