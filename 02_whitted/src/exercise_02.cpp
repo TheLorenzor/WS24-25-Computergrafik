@@ -7,6 +7,7 @@
 #include <cglib/rt/light.h>
 #include <cglib/rt/material.h>
 #include <cglib/rt/render_data.h>
+#include <math.h>
 
 /*
  * TODO: implement a ray-sphere intersection test here.
@@ -26,8 +27,22 @@ bool intersect_sphere(
 {
     cg_assert(t);
 	cg_assert(std::fabs(glm::length(ray_direction) - 1.f) < EPSILON);
+	float a = glm::dot(ray_direction, ray_direction);
+	float b = glm::dot(2.f * ray_direction,ray_origin - center);
+	float c = glm::dot(ray_origin - center, ray_origin - center)-radius*radius;
 
-    return false;
+	float discr = b*b - 4*a*c;
+	if (discr < 0) {
+		return false;
+	}
+ 	if (discr>0 ) {
+		float t_2 = (-b - sqrt(discr))/(2*a);
+		if (t_2 <0) {
+			return false;
+		}
+	}
+	return true;
+
 }
 
 /*

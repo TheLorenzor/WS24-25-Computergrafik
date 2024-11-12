@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//Build shared libraries
+BUILD_SHARED_LIBS:BOOL=OFF
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=D:/Programme/Programming/Perl/c/bin/addr2line.exe
 
@@ -260,23 +263,54 @@ GLEW_LIBRARY:FILEPATH=GLEW_LIBRARY-NOTFOUND
 //The GLEW shared library
 GLEW_LIBRARY_SHARED:FILEPATH=GLEW_LIBRARY_SHARED-NOTFOUND
 
-//fwrwere
+//Value Computed by CMake
+GLFW_BINARY_DIR:STATIC=D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glfw
+
+//Build the GLFW documentation
+GLFW_BUILD_DOCS:BOOL=OFF
+
+//Build the GLFW example programs
 GLFW_BUILD_EXAMPLES:BOOL=OFF
 
-//aegegherh
+//Build the GLFW test programs
 GLFW_BUILD_TESTS:BOOL=OFF
+
+//Include internals in documentation
+GLFW_DOCUMENT_INTERNALS:BOOL=OFF
 
 //Path to GLFW include directory.
 GLFW_INCLUDE_DIR:PATH=GLFW_INCLUDE_DIR-NOTFOUND
 
-//fasdfa
+//Generate installation target
 GLFW_INSTALL:BOOL=OFF
+
+//Value Computed by CMake
+GLFW_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies of GLFW
+GLFW_LIBRARIES:STRING=opengl32
 
 //Absolute path to GLFW library.
 GLFW_LIBRARY:FILEPATH=GLFW_LIBRARY-NOTFOUND
 
 //Absolute path to GLFW shared library.
 GLFW_LIBRARY_SHARED:FILEPATH=GLFW_LIBRARY_SHARED-NOTFOUND
+
+//Value Computed by CMake
+GLFW_SOURCE_DIR:STATIC=D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib/glfw
+
+//Set swap interval even when DWM compositing is enabled
+GLFW_USE_DWM_SWAP_INTERVAL:BOOL=OFF
+
+//Use EGL for context creation
+GLFW_USE_EGL:BOOL=OFF
+
+//Force use of high-performance GPU on Optimus systems
+GLFW_USE_OPTIMUS_HPG:BOOL=OFF
+
+//Takes an empty string or 64. Directory where lib will be installed:
+// lib or lib64
+LIB_SUFFIX:STRING=
 
 //OpenGL library for win32
 OPENGL_gl_LIBRARY:STRING=opengl32
@@ -396,6 +430,12 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=
+//Have library pthreads
+CMAKE_HAVE_PTHREADS_CREATE:INTERNAL=
+//Have library pthread
+CMAKE_HAVE_PTHREAD_CREATE:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors
@@ -416,7 +456,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -478,10 +518,20 @@ CPACK_SOURCE_7Z-ADVANCED:INTERNAL=1
 CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[opengl32][c ][v()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: OPENGL_gl_LIBRARY
 OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_glu_LIBRARY
 OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//Result of TRY_COMPILE
+THREADS_HAVE_PTHREAD_ARG:INTERNAL=FALSE
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
+//Test _GLFW_HAS_64ASLR
+_GLFW_HAS_64ASLR:INTERNAL=
+//Test _GLFW_HAS_ASLR
+_GLFW_HAS_ASLR:INTERNAL=
+//Test _GLFW_HAS_DEP
+_GLFW_HAS_DEP:INTERNAL=
 

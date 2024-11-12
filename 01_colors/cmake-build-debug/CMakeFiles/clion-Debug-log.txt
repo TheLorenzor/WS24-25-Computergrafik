@@ -7,16 +7,43 @@ CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
   CMake that the project does not need compatibility with older versions.
 
 
--- Found OpenGL: opengl32
 -- could not find system wide GFLW install, using our own version of GLFW instead
-CMake Error at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/CMakeListsCommon.cmake:68 (add_subdirectory):
-  add_subdirectory given source "D:/Code/Uni/KIT/Computergrafik -
-  Übungen/cglib/lib/glfw" which is not an existing directory.
-Call Stack (most recent call first):
-  CMakeLists.txt:21 (include)
+CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib/glfw/CMakeLists.txt:3 (cmake_minimum_required):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
 
 
--- GLFW_LIBRARIES: glfw
+CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib/glfw/CMakeLists.txt:8 (cmake_policy):
+  The OLD behavior for policy CMP0042 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+
+
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - no
+-- Found Threads: TRUE
+-- Performing Test _GLFW_HAS_DEP
+-- Performing Test _GLFW_HAS_DEP - Failed
+-- Performing Test _GLFW_HAS_ASLR
+-- Performing Test _GLFW_HAS_ASLR - Failed
+-- Performing Test _GLFW_HAS_64ASLR
+-- Performing Test _GLFW_HAS_64ASLR - Failed
+-- Using Win32 for window creation
+-- Using WGL for context creation
+-- GLFW_LIBRARIES: glfw;opengl32
 CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib/glew/CMakeLists.txt:9 (cmake_minimum_required):
   Compatibility with CMake < 3.5 will be removed from a future version of
   CMake.
@@ -26,7 +53,6 @@ CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib
 
 
 -- D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew
--- Configuring incomplete, errors occurred!
-
-Cannot get compiler information:
-	Cannot start a process, the working directory 'D:\Code\Uni\KIT\Computergrafik - Übungen\cglib\build\glfw\src' does not exist
+-- Configuring done (8.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug
