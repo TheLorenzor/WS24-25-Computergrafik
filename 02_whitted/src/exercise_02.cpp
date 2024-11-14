@@ -27,6 +27,7 @@ bool intersect_sphere(
 {
     cg_assert(t);
 	cg_assert(std::fabs(glm::length(ray_direction) - 1.f) < EPSILON);
+
 	float a = glm::dot(ray_direction, ray_direction);
 	float b = glm::dot(2.f * ray_direction,ray_origin - center);
 	float c = glm::dot(ray_origin - center, ray_origin - center)-radius*radius;
@@ -35,11 +36,19 @@ bool intersect_sphere(
 	if (discr < 0) {
 		return false;
 	}
+	float t_2 = (-b - sqrt(discr))/(2*a);
+	float t_1 = (-b + sqrt(discr))/(2*a);
  	if (discr>0 ) {
-		float t_2 = (-b - sqrt(discr))/(2*a);
-		if (t_2 <0) {
+		if (t_2 <0 || t_1 < 0) {
 			return false;
 		}
+	}
+	if (t_1<t_2)
+	{
+		*t = t_1;
+	} else
+	{
+		*t = t_2;
 	}
 	return true;
 
@@ -53,9 +62,11 @@ glm::vec3 SpotLight::getEmission(
 		) const
 {
 	cg_assert(std::fabs(glm::length(omega) - 1.f) < EPSILON);
+	float cos = glm::dot(omega,this->direction);
+
 
 	// TODO: implement a spotlight emitter as specified on the exercise sheet
-	return glm::vec3(0.f);
+	return glm::vec3(this->power*(this->falloff+2)*glm::pow(std::max(0.f,cos),this->falloff));
 }
 
 glm::vec3 evaluate_phong(
@@ -70,51 +81,46 @@ glm::vec3 evaluate_phong(
 
 	glm::vec3 contribution(0.f);
 
+	// TODO: check why this doesn't work for the balls
 	// iterate over lights and sum up their contribution
 	for (auto& light_uptr : data.context.get_active_scene()->lights) 
 	{
-		// TODO: calculate the (normalized) direction to the light
 		const Light *light = light_uptr.get();
 		glm::vec3 L = glm::normalize(light->getPosition()-P);
+		glm::vec3 Rl =2* glm::dot(L,N) * N - L;
 
 		float visibility = 1.f;
 		if (data.context.params.shadows) {
-			// TODO: check if light source is visible
 			if( !visible(data,light->getPosition(),P)) {
                  visibility = 0.f;
             }
 		}
 
-        float cos_theta = glm::dot(L,N) /(glm::length(L)* glm::length(N));
+        float cos_theta = glm::dot(N,L);
 		float oOfx = 0.f;
 		if (cos_theta > 0.f) {
-			oOfx = 1;
+			oOfx = 1.f;
 		}
-		float euklDist = glm::pow(glm::length(light->getPosition()-P),2);
-		float prev_term = (light->getEmission(-L).x * visibility * oOfx)/ euklDist;
+		float euklDist = glm::pow(glm::length(P - light->getPosition()),2);
+		float prev_term = light->getEmission(-L).x * visibility * oOfx/ euklDist;
 
 
 		glm::vec3 diffuse(0.f);
 		if (data.context.params.diffuse) {
-			// TODO: compute diffuse component of phong model
-			diffuse = mat.k_d * std::fmaxf(0.f,cos_theta)*prev_term;
-
+			diffuse = mat.k_d * std::max(0.f,cos_theta);
 		}
 
 		glm::vec3 specular(0.f);
 		if (data.context.params.specular) {
-			// TODO: compute specular component of phong model
-			glm::vec3 R_L =glm::normalize(2* glm::dot(L,N) * N - L);
-
-			float cos_varPhi =  glm::dot(R_L,V) / (glm::length(R_L)*glm::length(V));
-			specular = mat.k_s * std::fmaxf(0.f,cos_varPhi)*prev_term;
+			float cos_varPhi =  glm::dot(Rl,V);
+			specular = mat.k_s * std::pow(std::max(0.f,cos_varPhi),mat.n);
 		}
 		glm::vec3 ambient = data.context.params.ambient ? mat.k_a : glm::vec3(0.0f);
 
-		// TODO: modify this and implement the phong model as specified on the exercise sheet
-		contribution += ambient * (light->getPower()/euklDist);
-		contribution += diffuse;
-		contribution += specular;
+		contribution += diffuse*prev_term;
+		contribution += specular*prev_term;
+		contribution = glm::vec3(0.f);
+		contribution += ambient * light->getPower();
 	}
 
 	return contribution;
