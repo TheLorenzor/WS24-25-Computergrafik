@@ -119,8 +119,8 @@ glm::vec3 evaluate_phong(
 
 		contribution += diffuse*prev_term;
 		contribution += specular*prev_term;
-		contribution = glm::vec3(0.f);
-		contribution += ambient * light->getPower();
+
+		contribution += ambient * (light->getPower()/euklDist);
 	}
 
 	return contribution;
