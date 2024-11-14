@@ -165,7 +165,10 @@ glm::vec3 handle_transmissive_material_single_ior(
 {
 	if (data.context.params.fresnel) {
 		// TODO: replace with proper fresnel handling.
-		return evaluate_transmission(data, depth, P, N, V, eta);
+		float F = fresnel(V,N,eta);
+
+		return evaluate_transmission(data, depth, P, N, V, eta)*(1-F) + evaluate_reflection(data, depth, P, N, V)*F;
+
 	}
 	else {
 		// just regular transmission
