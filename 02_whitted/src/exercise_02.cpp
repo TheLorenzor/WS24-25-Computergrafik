@@ -164,13 +164,12 @@ glm::vec3 handle_transmissive_material_single_ior(
 	float eta)					// the relative refraction index
 {
 	if (data.context.params.fresnel) {
-		// TODO: replace with proper fresnel handling.
+
 		float F = fresnel(V,N,eta);
 
 		return evaluate_transmission(data, depth, P, N, V, eta)*(1-F) + evaluate_reflection(data, depth, P, N, V)*F;
 
-	}
-	else {
+	} else {
 		// just regular transmission
 		return evaluate_transmission(data, depth, P, N, V, eta);
 	}
@@ -185,11 +184,15 @@ glm::vec3 handle_transmissive_material(
 	glm::vec3 const& eta_of_channel)	// relative refraction index of red, green and blue color channel
 {
 	if (data.context.params.dispersion && !(eta_of_channel[0] == eta_of_channel[1] && eta_of_channel[0] == eta_of_channel[2])) {
-		// TODO: split ray into 3 rays (one for each color channel) and implement dispersion here
+
 		glm::vec3 contribution(0.f);
+
+		for (int i =0 ; i< 3; i++)
+		{
+			contribution +=1.f/3.f * handle_transmissive_material_single_ior(data,depth,P,N,V,eta_of_channel[i]);
+		}
 		return contribution;
-	}
-	else {
+	} else {
 		// dont handle transmission, take average refraction index instead.
 		const float eta = 1.f/3.f*(eta_of_channel[0]+eta_of_channel[1]+eta_of_channel[2]);
 		return handle_transmissive_material_single_ior(data, depth, P, N, V, eta);
