@@ -134,7 +134,12 @@ glm::vec3 evaluate_reflection(
 	glm::vec3 const& V)			// view vector (already normalized)
 {
 	// TODO: calculate reflective contribution by constructing and shooting a reflection ray.
-	return glm::vec3(0.f);
+	glm::vec3 R =reflect(V,N);
+	glm::vec3 origin = P + R* data.context.params.ray_epsilon;
+
+	const Ray ray = Ray(origin,R);
+
+	return trace_recursive(data,ray,depth+1);
 }
 
 glm::vec3 evaluate_transmission(
