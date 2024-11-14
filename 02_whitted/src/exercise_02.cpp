@@ -10,7 +10,6 @@
 #include <math.h>
 
 /*
- * TODO: implement a ray-sphere intersection test here.
  * The sphere is defined by its center and radius.
  *
  * Return true, if (and only if) the ray intersects the sphere.
@@ -65,7 +64,6 @@ glm::vec3 SpotLight::getEmission(
 	float cos = glm::dot(omega,this->direction);
 
 
-	// TODO: implement a spotlight emitter as specified on the exercise sheet
 	return glm::vec3(this->power*(this->falloff+2)*glm::pow(std::max(0.f,cos),this->falloff));
 }
 
@@ -81,7 +79,6 @@ glm::vec3 evaluate_phong(
 
 	glm::vec3 contribution(0.f);
 
-	// TODO: check why this doesn't work for the balls
 	// iterate over lights and sum up their contribution
 	for (auto& light_uptr : data.context.get_active_scene()->lights) 
 	{
@@ -133,11 +130,9 @@ glm::vec3 evaluate_reflection(
 	glm::vec3 const& N,			// normal at the position (already normalized)
 	glm::vec3 const& V)			// view vector (already normalized)
 {
-	// TODO: calculate reflective contribution by constructing and shooting a reflection ray.
 	glm::vec3 R =reflect(V,N);
-	glm::vec3 origin = P + R* data.context.params.ray_epsilon;
 
-	const Ray ray = Ray(origin,R);
+	const Ray ray = Ray(P + R* data.context.params.ray_epsilon,R);
 
 	return trace_recursive(data,ray,depth+1);
 }
@@ -150,8 +145,13 @@ glm::vec3 evaluate_transmission(
 	glm::vec3 const& V,			// view vector (already normalized)
 	float eta)					// the relative refraction index
 {
-	// TODO: calculate transmissive contribution by constructing and shooting a transmission ray.
 	glm::vec3 contribution(0.f);
+
+	glm::vec3 newDir = glm::vec3(0,0,0);
+	if (refract(V,N,eta,&newDir)) {
+		const Ray ray = Ray(P + newDir * data.context.params.ray_epsilon,newDir);
+		return trace_recursive(data,ray,depth+1);
+	}
 	return contribution;
 }
 
