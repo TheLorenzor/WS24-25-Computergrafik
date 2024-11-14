@@ -4,3 +4,7 @@ build
 cg
 *.exe
 *.yaml
+*.cmake
+*.rsp
+*.make
+*.ts

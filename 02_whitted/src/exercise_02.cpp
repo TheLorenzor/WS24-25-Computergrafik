@@ -53,7 +53,7 @@ glm::vec3 SpotLight::getEmission(
 		) const
 {
 	cg_assert(std::fabs(glm::length(omega) - 1.f) < EPSILON);
- 
+
 	// TODO: implement a spotlight emitter as specified on the exercise sheet
 	return glm::vec3(0.f);
 }
@@ -75,27 +75,46 @@ glm::vec3 evaluate_phong(
 	{
 		// TODO: calculate the (normalized) direction to the light
 		const Light *light = light_uptr.get();
-		glm::vec3 L(0.0f, 1.0f, 0.0f);
+		glm::vec3 L = glm::normalize(light->getPosition()-P);
 
 		float visibility = 1.f;
 		if (data.context.params.shadows) {
 			// TODO: check if light source is visible
+			if( !visible(data,light->getPosition(),P)) {
+                 visibility = 0.f;
+            }
 		}
+
+        float cos_theta = glm::dot(L,N) /(glm::length(L)* glm::length(N));
+		float oOfx = 0.f;
+		if (cos_theta > 0.f) {
+			oOfx = 1;
+		}
+		float euklDist = glm::pow(glm::length(light->getPosition()-P),2);
+		float prev_term = (light->getEmission(-L).x * visibility * oOfx)/ euklDist;
+
 
 		glm::vec3 diffuse(0.f);
 		if (data.context.params.diffuse) {
 			// TODO: compute diffuse component of phong model
+			diffuse = mat.k_d * std::fmaxf(0.f,cos_theta)*prev_term;
+
 		}
 
 		glm::vec3 specular(0.f);
 		if (data.context.params.specular) {
 			// TODO: compute specular component of phong model
-		}
+			glm::vec3 R_L =glm::normalize(2* glm::dot(L,N) * N - L);
 
+			float cos_varPhi =  glm::dot(R_L,V) / (glm::length(R_L)*glm::length(V));
+			specular = mat.k_s * std::fmaxf(0.f,cos_varPhi)*prev_term;
+		}
 		glm::vec3 ambient = data.context.params.ambient ? mat.k_a : glm::vec3(0.0f);
 
 		// TODO: modify this and implement the phong model as specified on the exercise sheet
-		contribution += ambient * light->getPower();
+		contribution += ambient * (light->getPower()/euklDist);
+		contribution += diffuse;
+		contribution += specular;
 	}
 
 	return contribution;

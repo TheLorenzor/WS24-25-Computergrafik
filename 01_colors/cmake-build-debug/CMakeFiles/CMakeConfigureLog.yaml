@@ -673,3 +673,239 @@ events:
       Running the CXX compiler's linker: "../src/gcc-8.3.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libstdcxx-pch --disable-libstdcxx-debug --disable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/opt/build/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/opt/build/prerequisites/x86_64-w64-mingw32-static --with-mpc=/opt/build/prerequisites/x86_64-w64-mingw32-static --with-isl=/opt/build/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh, Built by strawberryperl.com project' --with-bugurl=https:/sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/opt/build/x86_64-830-posix-seh-rt_v6/mingw64/opt/include -I/opt/build/prerequisites/x86_64-zlib-static/include -I/opt/build/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/opt/build/x86_64-830-posix-seh-rt_v6/mingw64/opt/include -I/opt/build/prerequisites/x86_64-zlib-static/include -I/opt/build/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/opt/build/x86_64-830-posix-seh-rt_v6/mingw64/opt/include -I/opt/build/prerequisites/x86_64-zlib-static/include -I/opt/build/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/opt/build/x86_64-830-posix-seh-rt_v6/mingw64/opt/lib -L/opt/build/prerequisites/x86_64-zlib-static/lib -L/opt/build/prerequisites/x86_64-w64-mingw32-static/lib ' LD_FOR_TARGET=/opt/build/x86_64-830-posix-seh-rt_v6/mingw64/bin/ld.exe" "--version"
       
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:95 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_8d9f8/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_8d9f8.dir/build.make CMakeFiles/cmTC_8d9f8.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a'
+        Building C object CMakeFiles/cmTC_8d9f8.dir/src.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe -DCMAKE_HAVE_LIBC_PTHREAD  -fdiagnostics-color=always -o CMakeFiles/cmTC_8d9f8.dir/src.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a/src.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a/src.c: No such file or directory
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kno input files
+        compilation terminated.
+        gmake.exe[1]: *** [CMakeFiles/cmTC_8d9f8.dir/build.make:78: CMakeFiles/cmTC_8d9f8.dir/src.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uvqw9a'
+        gmake.exe: *** [Makefile:127: cmTC_8d9f8/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:95 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_3e450/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_3e450.dir/build.make CMakeFiles/cmTC_3e450.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33'
+        Building C object CMakeFiles/cmTC_3e450.dir/CheckFunctionExists.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe   -DCHECK_FUNCTION_EXISTS=pthread_create -fdiagnostics-color=always -o CMakeFiles/cmTC_3e450.dir/CheckFunctionExists.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33/CheckFunctionExists.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33/CheckFunctionExists.c: No such file or directory
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kno input files
+        compilation terminated.
+        gmake.exe[1]: *** [CMakeFiles/cmTC_3e450.dir/build.make:78: CMakeFiles/cmTC_3e450.dir/CheckFunctionExists.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-9w8b33'
+        gmake.exe: *** [Makefile:127: cmTC_3e450/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:112 (CHECK_LIBRARY_EXISTS)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:95 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_80e6c/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_80e6c.dir/build.make CMakeFiles/cmTC_80e6c.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9'
+        Building C object CMakeFiles/cmTC_80e6c.dir/CheckFunctionExists.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe   -DCHECK_FUNCTION_EXISTS=pthread_create -fdiagnostics-color=always -o CMakeFiles/cmTC_80e6c.dir/CheckFunctionExists.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9/CheckFunctionExists.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9/CheckFunctionExists.c: No such file or directory
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kno input files
+        compilation terminated.
+        gmake.exe[1]: *** [CMakeFiles/cmTC_80e6c.dir/build.make:78: CMakeFiles/cmTC_80e6c.dir/CheckFunctionExists.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-pudjv9'
+        gmake.exe: *** [Makefile:127: cmTC_80e6c/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:136 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/FindThreads.cmake:179 (_threads_check_flag_pthread)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:95 (find_package)"
+    checks:
+      - "Check if compiler accepts -pthread"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "THREADS_HAVE_PTHREAD_ARG"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_da444/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_da444.dir/build.make CMakeFiles/cmTC_da444.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e'
+        Building C object CMakeFiles/cmTC_da444.dir/CheckForPthreads.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe   -fdiagnostics-color=always -o CMakeFiles/cmTC_da444.dir/CheckForPthreads.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e/CheckForPthreads.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e/CheckForPthreads.c: No such file or directory
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kfatal error: \x1b[m\x1b[Kno input files
+        compilation terminated.
+        gmake.exe[1]: *** [CMakeFiles/cmTC_da444.dir/build.make:78: CMakeFiles/cmTC_da444.dir/CheckForPthreads.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mso27e'
+        gmake.exe: *** [Makefile:127: cmTC_da444/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:145 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test _GLFW_HAS_DEP"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "_GLFW_HAS_DEP"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_a9338/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_a9338.dir/build.make CMakeFiles/cmTC_a9338.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta'
+        Building C object CMakeFiles/cmTC_a9338.dir/src.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe -D_GLFW_HAS_DEP  -Wl,--nxcompat -fdiagnostics-color=always -o CMakeFiles/cmTC_a9338.dir/src.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta/src.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta/src.c: No such file or directory
+        gmake.exe[1]: *** [CMakeFiles/cmTC_a9338.dir/build.make:78: CMakeFiles/cmTC_a9338.dir/src.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ltnlta'
+        gmake.exe: *** [Makefile:127: cmTC_a9338/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:152 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test _GLFW_HAS_ASLR"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "_GLFW_HAS_ASLR"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_e91a0/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_e91a0.dir/build.make CMakeFiles/cmTC_e91a0.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng'
+        Building C object CMakeFiles/cmTC_e91a0.dir/src.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe -D_GLFW_HAS_ASLR  -Wl,--dynamicbase -fdiagnostics-color=always -o CMakeFiles/cmTC_e91a0.dir/src.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng/src.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng/src.c: No such file or directory
+        gmake.exe[1]: *** [CMakeFiles/cmTC_e91a0.dir/build.make:78: CMakeFiles/cmTC_e91a0.dir/src.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-wnzxng'
+        gmake.exe: *** [Makefile:127: cmTC_e91a0/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/share/cmake-3.29/Modules/CheckCCompilerFlag.cmake:51 (cmake_check_compiler_flag)"
+      - "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/lib/glfw/CMakeLists.txt:159 (check_c_compiler_flag)"
+    checks:
+      - "Performing Test _GLFW_HAS_64ASLR"
+    directories:
+      source: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s"
+      binary: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_MODULE_PATH: "D:/Code/Uni/KIT/Computergrafik - \u00dcbungen/cglib/ext/cmake_helpers"
+    buildResult:
+      variable: "_GLFW_HAS_64ASLR"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s'
+        
+        Run Build Command(s): "D:/Programme/Programming/JetBrains/CLion 2024.2.3/bin/cmake/win/x64/bin/cmake.exe" -E env VERBOSE=1 D:/Programme/Programming/Perl/c/bin/gmake.exe -f Makefile cmTC_672e0/fast
+        D:/Programme/Programming/Perl/c/bin/gmake.exe  -f CMakeFiles/cmTC_672e0.dir/build.make CMakeFiles/cmTC_672e0.dir/build
+        gmake.exe[1]: Entering directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s'
+        Building C object CMakeFiles/cmTC_672e0.dir/src.c.obj
+        D:/Programme/Programming/Perl/c/bin/gcc.exe -D_GLFW_HAS_64ASLR  -Wl,--high-entropy-va -fdiagnostics-color=always -o CMakeFiles/cmTC_672e0.dir/src.c.obj -c "D:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s/src.c"
+        \x1b[01m\x1b[Kgcc.exe:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[KD:/Code/Uni/KIT/Computergrafik - ├£bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s/src.c: No such file or directory
+        gmake.exe[1]: *** [CMakeFiles/cmTC_672e0.dir/build.make:78: CMakeFiles/cmTC_672e0.dir/src.c.obj] Error 1
+        gmake.exe[1]: Leaving directory 'D:/Code/Uni/KIT/Computergrafik - ▄bungen/01_colors/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-mdlx6s'
+        gmake.exe: *** [Makefile:127: cmTC_672e0/fast] Error 2
+        
+      exitCode: 2
+...
