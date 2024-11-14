@@ -186,11 +186,9 @@ glm::vec3 handle_transmissive_material(
 	if (data.context.params.dispersion && !(eta_of_channel[0] == eta_of_channel[1] && eta_of_channel[0] == eta_of_channel[2])) {
 
 		glm::vec3 contribution(0.f);
-
-		for (int i =0 ; i< 3; i++)
-		{
-			contribution +=1.f/3.f * handle_transmissive_material_single_ior(data,depth,P,N,V,eta_of_channel[i]);
-		}
+		contribution.x =  handle_transmissive_material_single_ior(data,depth,P,N,V,eta_of_channel[0]).x;
+		contribution.y =  handle_transmissive_material_single_ior(data,depth,P,N,V,eta_of_channel[1]).y;
+		contribution.z =  handle_transmissive_material_single_ior(data,depth,P,N,V,eta_of_channel[2]).z;
 		return contribution;
 	} else {
 		// dont handle transmission, take average refraction index instead.
