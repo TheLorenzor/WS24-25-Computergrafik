@@ -26,21 +26,6 @@ CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib
   behavior and not rely on setting a policy to OLD.
 
 
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
--- Looking for pthread_create in pthreads
--- Looking for pthread_create in pthreads - not found
--- Looking for pthread_create in pthread
--- Looking for pthread_create in pthread - not found
--- Check if compiler accepts -pthread
--- Check if compiler accepts -pthread - no
--- Found Threads: TRUE
--- Performing Test _GLFW_HAS_DEP
--- Performing Test _GLFW_HAS_DEP - Failed
--- Performing Test _GLFW_HAS_ASLR
--- Performing Test _GLFW_HAS_ASLR - Failed
--- Performing Test _GLFW_HAS_64ASLR
--- Performing Test _GLFW_HAS_64ASLR - Failed
 -- Using Win32 for window creation
 -- Using WGL for context creation
 -- GLFW_LIBRARIES: glfw;opengl32
@@ -53,6 +38,6 @@ CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib
 
 
 -- D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew
--- Configuring done (8.0s)
--- Generating done (0.1s)
+-- Configuring done (1.9s)
+-- Generating done (0.5s)
 -- Build files have been written to: D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug
