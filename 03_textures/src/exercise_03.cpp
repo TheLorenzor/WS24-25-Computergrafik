@@ -232,7 +232,8 @@ intersect(Ray const& ray, Intersection* isect) const
        	auto newRay = transform_ray(ray , this->transform_world_to_object);
 
         if (geo->intersect(newRay, isect)) {
-			isect = transform_intersection(isect,this->transform_object_to_world,this->transform_object_to_world_normal)
+          	auto constIsect = const_cast<const Intersection*>(isect);
+			isect = transform_intersection(&(*constIsect),this->transform_object_to_world,this->transform_object_to_world_normal)
             return true;
         }
         return false;
