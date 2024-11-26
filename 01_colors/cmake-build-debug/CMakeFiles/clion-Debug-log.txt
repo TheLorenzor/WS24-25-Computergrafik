@@ -38,6 +38,6 @@ CMake Deprecation Warning at D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/lib
 
 
 -- D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew
--- Configuring done (1.9s)
--- Generating done (0.5s)
+-- Configuring done (2.0s)
+-- Generating done (0.2s)
 -- Build files have been written to: D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug

@@ -152,17 +152,17 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/clean: D:/Code/
 # Target rules for target CMakeFiles/cg.dir
 
 # All Build rule for target.
+CMakeFiles/cg.dir/all: D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/all
 CMakeFiles/cg.dir/all: D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/all
 CMakeFiles/cg.dir/all: D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/all
-CMakeFiles/cg.dir/all: D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cg.dir/build.make CMakeFiles/cg.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cg.dir/build.make CMakeFiles/cg.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5 "Built target cg"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4 "Built target cg"
 .PHONY : CMakeFiles/cg.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/cg.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 41
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 44
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/cg.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 0
 .PHONY : CMakeFiles/cg.dir/rule
@@ -183,7 +183,7 @@ CMakeFiles/cg.dir/clean:
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=38,39,40,41,42,43,44,45,46,47,48,49,50 "Built target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=41,42,43,44,45,46,47,48,49,50,51,52,53 "Built target glfw"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.
@@ -209,7 +209,7 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glfw/src/CMakeFiles/glfw
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=26,27,28 "Built target glew64"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=29,30,31 "Built target glew64"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64.dir/all
 
 # Build rule for subdir invocation for target.
@@ -235,7 +235,7 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64.d
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=35,36,37 "Built target glew64s"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=38,39,40 "Built target glew64s"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64s.dir/all
 
 # Build rule for subdir invocation for target.
@@ -261,7 +261,7 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64s.
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=29,30,31 "Built target glew64mx"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=32,33,34 "Built target glew64mx"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mx.dir/all
 
 # Build rule for subdir invocation for target.
@@ -287,7 +287,7 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mx
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=32,33,34 "Built target glew64mxs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=35,36,37 "Built target glew64mxs"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mxs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -313,12 +313,12 @@ D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/glew/CMakeFiles/glew64mx
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/all:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/depend"
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/build"
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 "Built target cglib_cg_1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 "Built target cglib_cg_1"
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/all
 
 # Build rule for subdir invocation for target.
 D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 20
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 24
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/all"
 	$(CMAKE_COMMAND) -E cmake_progress_start "D:/Code/Uni/KIT/Computergrafik - Übungen/01_colors/cmake-build-debug/CMakeFiles" 0
 .PHONY : D:/Code/Uni/KIT/Computergrafik\ -\ Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/rule

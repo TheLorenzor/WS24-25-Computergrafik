@@ -272,30 +272,6 @@ cglib_cg_1/fast:
 	$(MAKE) $(MAKESILENT) -f "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/build.make" "D:/Code/Uni/KIT/Computergrafik - Übungen/cglib/build/cglib/CMakeFiles/cglib_cg_1.dir/build"
 .PHONY : cglib_cg_1/fast
 
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.obj: D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.obj
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.obj
-
-# target to build an object file
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cg.dir/build.make CMakeFiles/cg.dir/D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.obj
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.obj
-
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.i: D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.i
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.i
-
-# target to preprocess a source file
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cg.dir/build.make CMakeFiles/cg.dir/D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.i
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.i
-
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.s: D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.s
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.s
-
-# target to generate assembly for a file
-D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cg.dir/build.make CMakeFiles/cg.dir/D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.s
-.PHONY : D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.cpp.s
-
 src/exercise_01.obj: src/exercise_01.cpp.obj
 .PHONY : src/exercise_01.obj
 
@@ -389,9 +365,6 @@ help:
 	@echo "... glew64mxs"
 	@echo "... glew64s"
 	@echo "... glfw"
-	@echo "... D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.obj"
-	@echo "... D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.i"
-	@echo "... D_/Code/Uni/KIT/Computergrafik_-_Übungen/02_whitted/src/exercise_02.s"
 	@echo "... src/exercise_01.obj"
 	@echo "... src/exercise_01.i"
 	@echo "... src/exercise_01.s"
