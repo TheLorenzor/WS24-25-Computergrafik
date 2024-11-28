@@ -77,7 +77,8 @@ wrap_repeat(int val, int size)
 {
 	cg_assert(size > 0);
 
-	return 0;
+    //std::cout << val <<" "<< size << " " << val % size << std::endl;
+	return std::abs(val%size);
 }
 
 
