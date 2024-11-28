@@ -33,11 +33,13 @@ evaluate_nearest(int level, glm::vec2 const& uv) const
 	cg_assert(mip_levels[level]);
 
 	// TODO: compute the st-coordinates for the given uv-coordinates and mipmap level
-	int s = 0;
-	int t = 0;
+	int width = mip_levels[level]->getWidth();
+    int height = mip_levels[level]->getHeight();
+    float u = width * uv.x;
+    float v = height * uv.y;
 
 	// get the value of pixel (s, t) of miplevel level
-	return get_texel(level, s, t);
+	return get_texel(level, (int)u, (int)v);
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +55,13 @@ int ImageTexture::
 wrap_clamp(int val, int size)
 {
 	cg_assert(size > 0);
-	return 0;
+    if (val < 0) {
+        return 0;
+    }
+    if (val > size-1) {
+      return size-1;
+    }
+	return val;
 }
 
 /*
@@ -68,6 +76,7 @@ int ImageTexture::
 wrap_repeat(int val, int size)
 {
 	cg_assert(size > 0);
+
 	return 0;
 }
 
@@ -229,20 +238,18 @@ intersect(Ray const& ray, Intersection* isect) const
 	if (RaytracingContext::get_active()->params.transform_objects) {
 
 		// TODO: transform ray, intersect object, transform intersection
-       	auto newRay = transform_ray(ray , this->transform_world_to_object);
+       	const Ray& newRay = transform_ray(ray , this->transform_world_to_object);
 
         if (geo->intersect(newRay, isect)) {
-          	auto constIsect = const_cast<const Intersection*>(isect);
-			isect = transform_intersection(&(*constIsect),this->transform_object_to_world,this->transform_object_to_world_normal)
+			auto newIsect = *isect;
+        	*isect = transform_intersection(newIsect,this->transform_object_to_world,this->transform_object_to_world_normal);
             return true;
         }
         return false;
-		//std::cout << isect->position << std::endl;
 		// information back
 	}
 	return geo->intersect(ray, isect);
 }
-
 
 /*
  * Transform a direction from tangent space to object space.
@@ -269,7 +276,12 @@ glm::vec3 transform_direction_to_object_space(
 	cg_assert(std::fabs(glm::length(normal)    - 1.0f) < 1e-4f);
 	cg_assert(std::fabs(glm::length(tangent)   - 1.0f) < 1e-4f);
 	cg_assert(std::fabs(glm::length(bitangent) - 1.0f) < 1e-4f);
-	return d;
+
+	glm::mat3 rotation_Matrix = glm::mat3(tangent,normal,bitangent);
+    glm::vec3 newDir = rotation_Matrix * d;
+    newDir = glm::normalize(newDir);
+
+	return newDir;
 }
 
 // -----------------------------------------------------------------------------
