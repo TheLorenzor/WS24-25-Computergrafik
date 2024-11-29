@@ -76,9 +76,13 @@ int ImageTexture::
 wrap_repeat(int val, int size)
 {
 	cg_assert(size > 0);
-
-    //std::cout << val <<" "<< size << " " << val % size << std::endl;
-	return std::abs(val%size);
+    int returnVal = 0;
+	if (val < 0) {
+  		returnVal = size-1 + (val%size);
+    } else {
+    	returnVal = std::abs(val%size);
+    }
+	return returnVal;
 }
 
 
@@ -161,8 +165,8 @@ create_mipmap()
     	size_y =size_y / 2;
         i++;
     	mip_levels.emplace_back(new Image(size_x, size_y));
-    	for (int j =0; j < size_x-1; j++) {
-    		for (int k = 0; k < size_y-1; k++) {
+    	for (int j =0; j < size_x; j++) {
+    		for (int k = 0; k < size_y; k++) {
 				glm::vec4 pixel_avg = (
                 	mip_levels[i-1]->getPixel((j*2),(k*2))+
                 	mip_levels[i-1]->getPixel((j*2)+1,(k*2))+
