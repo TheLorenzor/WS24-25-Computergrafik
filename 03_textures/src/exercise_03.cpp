@@ -35,11 +35,11 @@ evaluate_nearest(int level, glm::vec2 const& uv) const
 	// TODO: compute the st-coordinates for the given uv-coordinates and mipmap level
 	int width = mip_levels[level]->getWidth();
     int height = mip_levels[level]->getHeight();
-    float u = width * uv.x;
-    float v = height * uv.y;
+    float s = width * uv.x;
+    float t = height * uv.y;
 
 	// get the value of pixel (s, t) of miplevel level
-	return get_texel(level, (int)u, (int)v);
+	return get_texel(level, (int)s, (int)t);
 }
 
 // -----------------------------------------------------------------------------
@@ -101,8 +101,23 @@ evaluate_bilinear(int level, glm::vec2 const& uv) const
 {
 	cg_assert(level >= 0 && level < static_cast<int>(mip_levels.size()));
 	cg_assert(mip_levels[level]);
-	
-	return glm::vec4(0.f);
+
+   	int width = mip_levels[level]->getWidth();
+    int height = mip_levels[level]->getHeight();
+
+    float s = width * uv.x;
+    float t = height * uv.y;
+
+    glm::vec4 obenLinks = get_texel(level, (int)s, (int)t);
+	glm::vec4 obenRechts = get_texel(level, (int)s+1, (int)t);
+
+    glm::vec4 untenLinks = get_texel(level, (int)s, (int)t+1);
+	glm::vec4 untenRechts = get_texel(level, (int)s+1, (int)t+1);
+
+    float a = s - int(s);
+    float b = t - int(t);
+
+	return (1.0f-a)*(1.0f-b)*obenLinks+a*(1-b)*obenRechts+ (1-a)*b*untenLinks+a*b*untenRechts;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +148,31 @@ create_mipmap()
 	cg_assert("must be power of two" && !(size_x & (size_x - 1)));
 	cg_assert("must be power of two" && !(size_y & (size_y - 1)));
 
+    int i =0;
+    float times = 0.0f;
+    if (size_x > size_y) {
+		times = std::log2(size_y);
+    } else {
+    	times = std::log2(size_x);
+    }
+
+    for (int y = 0; y < int(times); y++) {
+    	size_x =size_x / 2;
+    	size_y =size_y / 2;
+        i++;
+    	mip_levels.emplace_back(new Image(size_x, size_y));
+    	for (int j =0; j < size_x-1; j++) {
+    		for (int k = 0; k < size_y-1; k++) {
+				glm::vec4 pixel_avg = (
+                	mip_levels[i-1]->getPixel((j*2),(k*2))+
+                	mip_levels[i-1]->getPixel((j*2)+1,(k*2))+
+                	mip_levels[i-1]->getPixel((j*2),(k*2)+1)+
+                	mip_levels[i-1]->getPixel((j*2)+1,(k*2)+1));
+            	pixel_avg /= 4;
+				mip_levels[i]->setPixel(j, k,  pixel_avg);
+        	}
+		}
+    }
 }
 
 /*
