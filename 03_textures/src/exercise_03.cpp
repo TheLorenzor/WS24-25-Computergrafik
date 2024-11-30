@@ -305,15 +305,14 @@ intersect(Ray const& ray, Intersection* isect) const
 	if (RaytracingContext::get_active()->params.transform_objects) {
 
 		// TODO: transform ray, intersect object, transform intersection
-       	const Ray& newRay = transform_ray(ray , this->transform_world_to_object);
+    	/*Ray newRay = transform_ray(ray,this->transform_world_to_object);
 
         if (geo->intersect(newRay, isect)) {
-			auto newIsect = *isect;
+			/*auto newIsect = *isect;
         	*isect = transform_intersection(newIsect,this->transform_object_to_world,this->transform_object_to_world_normal);
-            return true;
+        	return true;
         }
-        return false;
-		// information back
+        return false;*/
 	}
 	return geo->intersect(ray, isect);
 }
