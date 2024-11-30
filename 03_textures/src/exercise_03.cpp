@@ -197,22 +197,30 @@ create_mipmap()
 glm::vec2 Object::
 compute_uv_aabb_size(const Ray rays[4], Intersection const& isect)
 {
-	// TODO: compute intersection positions
 	glm::vec3 intersection_positions[4] = {
 		isect.position, isect.position, isect.position, isect.position
 	};
 
 	for (int i = 0; i < 4; ++i) {
-		// todo: compute intersection positions using a ray->plane
-		// intersection
+        Intersection temp_isect;
+        if (geo->intersect(rays[i], &temp_isect)) {
+            intersection_positions[i] = temp_isect.position;
+        }
 	}
 
 	// compute uv coordinates from intersection positions
 	glm::vec2 intersection_uvs[4];
 	get_intersection_uvs(intersection_positions, isect, intersection_uvs);
 
-	// TODO: compute dudv = length of sides of AABB in uv space
-	return glm::vec2(0.0);
+
+    glm::vec2 uv_min = intersection_uvs[0];
+    glm::vec2 uv_max = intersection_uvs[0];
+    for (int i = 1; i < 4; ++i) {
+        uv_min = glm::min(uv_min, intersection_uvs[i]);
+        uv_max = glm::max(uv_max, intersection_uvs[i]);
+    }
+
+	return uv_max - uv_min;
 }
 
 /*
@@ -233,7 +241,21 @@ compute_uv_aabb_size(const Ray rays[4], Intersection const& isect)
 glm::vec4 ImageTexture::
 evaluate_trilinear(glm::vec2 const& uv, glm::vec2 const& dudv) const
 {
-	return glm::vec4(0.f);
+  	float width_s = dudv.x * this->mip_levels[0]->getWidth();
+    float height_t = dudv.y * this->mip_levels[0]->getHeight();
+    float T = std::log2(std::max(width_s, height_t));
+	if ( T > mip_levels.size() - 1) {
+          return evaluate_bilinear(mip_levels.size() - 1, uv);
+	} else if (T < 0) {
+    	return evaluate_bilinear(0, uv);
+    } else {
+    	int t1= int(T);
+        int t2 = int(T)+1;
+        glm::vec4 vec1 = evaluate_bilinear(t1, uv);
+        glm::vec4 vec2 = evaluate_bilinear(t2, uv);
+        T = T-int(T);
+        return vec1*(1-T)+T*vec2;
+    }
 }
 
 // -----------------------------------------------------------------------------
