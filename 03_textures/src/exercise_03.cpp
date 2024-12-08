@@ -76,12 +76,11 @@ int ImageTexture::
 wrap_repeat(int val, int size)
 {
 	cg_assert(size > 0);
-    int returnVal = 0;
-	if (val < 0) {
-  		returnVal = size-1 + (val%size);
-    } else {
-    	returnVal = std::abs(val%size);
-    }
+    int returnVal = val%size;
+
+	if (returnVal < 0) {
+		returnVal = returnVal+size;
+	}
 	return returnVal;
 }
 
@@ -111,17 +110,20 @@ evaluate_bilinear(int level, glm::vec2 const& uv) const
 
     float s = width * uv.x;
     float t = height * uv.y;
+	int sInt = std::floor(s);
+	int tInt = std::floor(t);
 
-    glm::vec4 obenLinks = get_texel(level, (int)s, (int)t);
-	glm::vec4 obenRechts = get_texel(level, (int)s+1, (int)t);
+	glm::vec4 t3 =  get_texel(level, sInt, tInt);
+	glm::vec4 t4 =  get_texel(level, sInt+1, tInt);
 
-    glm::vec4 untenLinks = get_texel(level, (int)s, (int)t+1);
-	glm::vec4 untenRechts = get_texel(level, (int)s+1, (int)t+1);
+	glm::vec4 t1 = get_texel(level, sInt, tInt+1);
+	glm::vec4 t2 = get_texel(level, sInt+1, tInt+1);
 
-    float a = s - int(s);
-    float b = t - int(t);
+	float a = std::fabs(s-sInt);
+	float b = std::fabs(tInt+1-t);
 
-	return (1.0f-a)*(1.0f-b)*obenLinks+a*(1-b)*obenRechts+ (1-a)*b*untenLinks+a*b*untenRechts;
+	return t1*(1-a)*(1-b) + t2*a*(1-b) + t3*(1-a)*b + t4 * a*b;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -306,10 +308,9 @@ intersect(Ray const& ray, Intersection* isect) const
 
 		// TODO: transform ray, intersect object, transform intersection
     	Ray newRay = transform_ray(ray,this->transform_world_to_object);
-
-        if (geo->intersect(newRay, isect)) {
-			auto newIsect = *isect;
-        	*isect = transform_intersection(newIsect,this->transform_object_to_world,this->transform_object_to_world_normal);
+		Intersection isectLoc;
+        if (geo->intersect(newRay, &isectLoc)) {
+        	*isect = transform_intersection(isectLoc,this->transform_object_to_world,this->transform_object_to_world_normal);
         	return true;
         }
         return false;
