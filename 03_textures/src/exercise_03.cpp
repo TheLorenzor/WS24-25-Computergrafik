@@ -281,7 +281,7 @@ glm::vec3 transform_position(glm::mat4 const& transform, glm::vec3 const& p)
 	glm::vec4 v4 = glm::vec4(p,1);
 	v4 =transform * v4;
 	glm::vec3 newVec = glm::vec3(v4[0],v4[1],v4[2]);
-	return glm::normalize(newVec);
+	return newVec;
 }
 
 /*
@@ -305,14 +305,14 @@ intersect(Ray const& ray, Intersection* isect) const
 	if (RaytracingContext::get_active()->params.transform_objects) {
 
 		// TODO: transform ray, intersect object, transform intersection
-    	/*Ray newRay = transform_ray(ray,this->transform_world_to_object);
+    	Ray newRay = transform_ray(ray,this->transform_world_to_object);
 
         if (geo->intersect(newRay, isect)) {
-			/*auto newIsect = *isect;
+			auto newIsect = *isect;
         	*isect = transform_intersection(newIsect,this->transform_object_to_world,this->transform_object_to_world_normal);
         	return true;
         }
-        return false;*/
+        return false;
 	}
 	return geo->intersect(ray, isect);
 }

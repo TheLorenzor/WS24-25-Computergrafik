@@ -1,4 +1,0 @@
-ToolSet: 1.0 (local)Ninja: 1.12.0@D:\Programme\Programming\JetBrains\CLion 2024.2.3\bin\ninja\win\x64\ninja.exe
-Options: 
-
-Options:
