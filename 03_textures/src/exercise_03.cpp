@@ -311,6 +311,7 @@ intersect(Ray const& ray, Intersection* isect) const
 		Intersection isectLoc;
         if (geo->intersect(newRay, &isectLoc)) {
         	*isect = transform_intersection(isectLoc,this->transform_object_to_world,this->transform_object_to_world_normal);
+			isect->t = glm::length(isect->position - ray.origin);
         	return true;
         }
         return false;
