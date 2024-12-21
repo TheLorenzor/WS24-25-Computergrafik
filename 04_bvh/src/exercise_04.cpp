@@ -90,6 +90,19 @@ void Image::filter(Image *target, int kernel_size, float* kernel, WrapMode wrap_
 	cg_assert (target);
 	cg_assert (target->getWidth() == m_width && target->getHeight() == m_height);
 
+	int midpoint = int(kernel_size / 2);
+
+	for (int i = 0; i < target->getWidth(); ++i) {
+		for (int j = 0; j < target->getHeight(); ++j) {
+			glm::vec4 pixel = glm::vec4(0.f);
+			for (int k =0;k<kernel_size;++k) {
+                for (int l = 0;l<kernel_size;++l) {
+                	pixel += this->getPixel(i-k+midpoint,j-l+midpoint,wrap_mode)*kernel[l+k*kernel_size];
+                }
+			}
+			target->setPixel(i,j,pixel);
+		}
+	}
 }
 
 /*
@@ -117,8 +130,6 @@ void Image::filter_separable(Image *target, int kernel_size, float* kernel, Wrap
 	// setPixel(x, y, value) to get and set pixels of an image
 
     int midpoint = int(kernel_size / 2);
-    this->getPixel(0,0,wrap_mode);
-	//std::cout <<target << "|||"<<this << std::endl;
     for (int i = 0; i < target->getWidth(); ++i) {
       for (int j = 0; j < target->getHeight(); ++j) {
         glm::vec4 pixel = glm::vec4(0.f);
