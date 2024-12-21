@@ -24,9 +24,19 @@ void Image::create_gaussian_kernel_1d(
 
 	// TODO: calculate filter values as described on the exercise sheet. 
 	// Make sure your kernel is normalized
+    float sum = 0;
+    float normalization = 1/ (sigma * glm::sqrt(2*std::numbers::pi));
+	int mid_point = int(kernel_size /2);
+
 	for (int i = 0; i < kernel_size; ++i) {
-		kernel[i] = 0.f;
+		kernel[i] = normalization*glm::exp(-glm::pow(i-mid_point,2)/(2*sigma*sigma));
+		sum = sum+ kernel[i];
 	}
+	// normalizing
+    for (int i = 0; i < kernel_size; ++i) {
+      kernel[i] = kernel[i]/sum;
+    }
+
 }
 
 /*
@@ -47,11 +57,21 @@ void Image::create_gaussian_kernel_2d(
 
 	// TODO: calculate filter values as described on the exercise sheet. 
 	// Make sure your kernel is normalized
+	float normalization = 1/ (sigma * sigma*2*std::numbers::pi);
+	int mid_point = int(kernel_size /2);
+	float sum = 0.f;
 	for (int j = 0; j < kernel_size; ++j) {
 		for (int i = 0; i < kernel_size; ++i) {
-			kernel[i+j*kernel_size] = 0.f;
+			kernel[i+j*kernel_size] = normalization * glm::exp(-(glm::pow(i-mid_point,2)+glm::pow(j-mid_point,2))/(2*sigma*sigma));
+        	sum = sum + kernel[i+j*kernel_size];
 		}
 	}
+	// normalization
+	for (int j = 0; j < kernel_size; ++j) {
+		for (int i = 0; i < kernel_size; ++i) {
+			kernel[i+j*kernel_size] = kernel[i+j*kernel_size]/sum;
+		}
+    }
 }
 
 /*
@@ -95,6 +115,28 @@ void Image::filter_separable(Image *target, int kernel_size, float* kernel, Wrap
 	//
 	// use the methods getPixel(x, y, wrap_mode) and
 	// setPixel(x, y, value) to get and set pixels of an image
+
+    int midpoint = int(kernel_size / 2);
+    this->getPixel(0,0,wrap_mode);
+	//std::cout <<target << "|||"<<this << std::endl;
+    for (int i = 0; i < target->getWidth(); ++i) {
+      for (int j = 0; j < target->getHeight(); ++j) {
+        glm::vec4 pixel = glm::vec4(0.f);
+      	for (int k =0;k<kernel_size;++k) {
+			pixel += this->getPixel(i-k+midpoint,j,wrap_mode)*kernel[k];
+      	}
+        target->setPixel(i,j,pixel);
+      }
+    }
+	for (int i = 0; i < target->getWidth(); ++i) {
+		for (int j = 0; j < target->getHeight(); ++j) {
+			glm::vec4 pixel = glm::vec4(0.f);
+			for (int k =0;k<kernel_size;++k) {
+				pixel += target->getPixel(i,j-k+midpoint,wrap_mode)*kernel[k];
+			}
+			target->setPixel(i,j,pixel);
+		}
+	}
 }
 
 /**
