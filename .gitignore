@@ -8,3 +8,4 @@ cg
 *.rsp
 *.make
 *.ts
+**/assignment_references/*
