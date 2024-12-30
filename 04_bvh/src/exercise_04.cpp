@@ -4,6 +4,7 @@
 
 #include <cglib/core/image.h>
 #include <complex>
+#include <map>
 
 /*
  * Create a 1 dimensional normalized gauss kernel
@@ -135,9 +136,7 @@ int BVH::reorder_triangles_median(
 	cg_assert(axis >= 0);
 	cg_assert(axis < 3);
 
-    int diff_to_end =this->triangle_indices.size() - (first_triangle_idx + num_triangles)+1;
-
-    std::vector<glm::vec3> midPoints_along_axis;
+    std::vector<std::pair<int,float>> midPoints_along_axis;
 
     for (int i = first_triangle_idx; i < num_triangles+first_triangle_idx-1; ++i) {
 		AABB aabb;
@@ -146,16 +145,19 @@ int BVH::reorder_triangles_median(
     	aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i+1]*3+2]);
     	glm::vec3 diff = aabb.max-aabb.min;
     	diff /=2;
-    	midPoints_along_axis.push_back(aabb.min+diff);
-
+    	glm::vec3 end = aabb.min+diff;
+    	midPoints_along_axis.emplace_back(this->triangle_indices[i],end[axis]);
     }
-	std::cout <<" TEST:" << midPoints_along_axis.size() << std::endl;
-    std::sort(this->triangle_indices.begin()+first_triangle_idx, this->triangle_indices.end()-diff_to_end,
-              [](const int &a, const int &b) -> bool {
-                return a > b;
+
+    std::sort(midPoints_along_axis.begin(), midPoints_along_axis.end(),
+              [](const std::pair<int,float> &a, const std::pair<int,float> &b) -> bool {
+              	return a.second > b.second;
               });
-	// TODO: Implement reordering.
-	return 0;
+
+	for (long unsigned int i =0 ; i< midPoints_along_axis.size(); ++i) {
+		this->triangle_indices[i+first_triangle_idx] = midPoints_along_axis[i].first;
+	}
+	return static_cast<int>(midPoints_along_axis.size() / 2) ;
 }
 
 /*
