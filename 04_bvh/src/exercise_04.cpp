@@ -195,7 +195,32 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 	nodes[node_idx].left          = -1;
 	nodes[node_idx].right         = -1;
 
-    reorder_triangles_median(first_triangle_idx, num_triangles, 0);
+    int left = reorder_triangles_median(first_triangle_idx, num_triangles, depth%3);
+	if (num_triangles<=MAX_TRIANGLES_IN_LEAF) {
+		for (int i = first_triangle_idx; i < first_triangle_idx+num_triangles-1; ++i) {
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3]);
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+1]);
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+2]);
+		}
+		return;
+	}
+	//left
+	nodes.push_back(Node{});
+	//right
+	nodes.push_back(Node{});
+
+	nodes[node_idx].left = nodes.size()-2;
+	nodes[node_idx].right = nodes.size()-1;
+	// recursive start
+	this->build_bvh(nodes[node_idx].left,first_triangle_idx,left,depth+1);
+	this->build_bvh(nodes[node_idx].right,first_triangle_idx+left,num_triangles-left,depth+1);
+	// extend aabb after finished
+
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.min);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.max);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
+
 }
 
 /*
