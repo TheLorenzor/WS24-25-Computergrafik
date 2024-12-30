@@ -194,6 +194,7 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 	nodes[node_idx].aabb.max      = glm::vec3(FLT_MAX);
 	nodes[node_idx].left          = -1;
 	nodes[node_idx].right         = -1;
+	cg_assert(num_triangles>0);
 
     int left = reorder_triangles_median(first_triangle_idx, num_triangles, depth%3);
 	if (num_triangles<=MAX_TRIANGLES_IN_LEAF) {
@@ -204,6 +205,7 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 		}
 		return;
 	}
+
 	//left
 	nodes.push_back(Node{});
 	//right
@@ -220,7 +222,9 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.max);
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
-
+	if (nodes[node_idx].left == -1) {
+		cg_assert(nodes[node_idx].right == -1);
+	}
 }
 
 /*
@@ -278,7 +282,11 @@ intersect_recursive(const Ray &ray, int idx, float *nearest_intersection, Inters
 	}
 
 	// This is an inner node. Recurse into child nodes.
-	else { 
+	else {
+		float t_min = FLT_MAX;
+		float t_max = -FLT_MAX;
+		nodes[n.left].aabb.intersect(ray,t_min,t_max);
+		std::cout << t_min <<"___"<< t_max << std::endl;
 		// TODO: Implement recursive traversal here.
 	}
 
