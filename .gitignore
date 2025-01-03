@@ -1,11 +1,6 @@
 .idea
 cglib
-build
 cg
-*.exe
-*.yaml
-*.cmake
-*.rsp
-*.make
-*.ts
-*.png
+**/assignment_references/*
+**/build/*
+**/cmake-build-debug/*

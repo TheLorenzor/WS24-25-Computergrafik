@@ -4,6 +4,7 @@
 
 #include <cglib/core/image.h>
 #include <complex>
+#include <map>
 
 /*
  * Create a 1 dimensional normalized gauss kernel
@@ -188,8 +189,28 @@ int BVH::reorder_triangles_median(
 	cg_assert(axis >= 0);
 	cg_assert(axis < 3);
 
-	// TODO: Implement reordering.
-	return 0;
+    std::vector<std::pair<int,float>> midPoints_along_axis;
+
+    for (int i = first_triangle_idx; i < num_triangles+first_triangle_idx-1; ++i) {
+		AABB aabb;
+      aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3]);
+    	aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i+1]*3+1]);
+    	aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i+1]*3+2]);
+    	glm::vec3 diff = aabb.max-aabb.min;
+    	diff /=2;
+    	glm::vec3 end = aabb.min+diff;
+    	midPoints_along_axis.emplace_back(this->triangle_indices[i],end[axis]);
+    }
+
+    std::sort(midPoints_along_axis.begin(), midPoints_along_axis.end(),
+              [](const std::pair<int,float> &a, const std::pair<int,float> &b) -> bool {
+              	return a.second > b.second;
+              });
+
+	for (long unsigned int i =0 ; i< midPoints_along_axis.size(); ++i) {
+		this->triangle_indices[i+first_triangle_idx] = midPoints_along_axis[i].first;
+	}
+	return static_cast<int>(midPoints_along_axis.size() / 2) ;
 }
 
 /*
@@ -226,6 +247,37 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 	nodes[node_idx].aabb.max      = glm::vec3(FLT_MAX);
 	nodes[node_idx].left          = -1;
 	nodes[node_idx].right         = -1;
+	cg_assert(num_triangles>0);
+
+    int left = reorder_triangles_median(first_triangle_idx, num_triangles, depth%3);
+	if (num_triangles<=MAX_TRIANGLES_IN_LEAF) {
+		for (int i = first_triangle_idx; i < first_triangle_idx+num_triangles-1; ++i) {
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3]);
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+1]);
+			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+2]);
+		}
+		return;
+	}
+
+	//left
+	nodes.push_back(Node{});
+	//right
+	nodes.push_back(Node{});
+
+	nodes[node_idx].left = nodes.size()-2;
+	nodes[node_idx].right = nodes.size()-1;
+	// recursive start
+	this->build_bvh(nodes[node_idx].left,first_triangle_idx,left,depth+1);
+	this->build_bvh(nodes[node_idx].right,first_triangle_idx+left,num_triangles-left,depth+1);
+	// extend aabb after finished
+
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.min);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.max);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
+	if (nodes[node_idx].left == -1) {
+		cg_assert(nodes[node_idx].right == -1);
+	}
 }
 
 /*
@@ -283,7 +335,11 @@ intersect_recursive(const Ray &ray, int idx, float *nearest_intersection, Inters
 	}
 
 	// This is an inner node. Recurse into child nodes.
-	else { 
+	else {
+		float t_min = FLT_MAX;
+		float t_max = -FLT_MAX;
+		nodes[n.left].aabb.intersect(ray,t_min,t_max);
+		std::cout << t_min <<"___"<< t_max << std::endl;
 		// TODO: Implement recursive traversal here.
 	}
 
