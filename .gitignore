@@ -5,3 +5,4 @@ cg
 **/build/*
 **/cmake-build-debug/*
 **/assignment_images/*
+**/cmake-build-debug

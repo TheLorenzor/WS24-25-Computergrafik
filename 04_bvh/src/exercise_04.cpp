@@ -240,18 +240,20 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 	cg_assert(node_idx < static_cast<int>(nodes.size()));
 	cg_assert(depth >= 0);
 
-	// TODO: Implement recursive build.
 	nodes[node_idx].triangle_idx  = first_triangle_idx;
 	nodes[node_idx].num_triangles = num_triangles;
-	nodes[node_idx].aabb.min      = glm::vec3(-FLT_MAX);
-	nodes[node_idx].aabb.max      = glm::vec3(FLT_MAX);
+	nodes[node_idx].aabb.min      = glm::vec3(FLT_MAX);
+	nodes[node_idx].aabb.max      = glm::vec3(-FLT_MAX);
 	nodes[node_idx].left          = -1;
 	nodes[node_idx].right         = -1;
 	cg_assert(num_triangles>0);
-
-    int left = reorder_triangles_median(first_triangle_idx, num_triangles, depth%3);
+	int left;
+	if (num_triangles > 1) {
+		 left = reorder_triangles_median(first_triangle_idx, num_triangles, depth%3);
+	}
 	if (num_triangles<=MAX_TRIANGLES_IN_LEAF) {
-		for (int i = first_triangle_idx; i < first_triangle_idx+num_triangles-1; ++i) {
+
+		for (int i = first_triangle_idx; i < first_triangle_idx+num_triangles; ++i) {
 			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3]);
 			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+1]);
 			nodes[node_idx].aabb.extend(this->triangle_soup.vertices[this->triangle_indices[i]*3+2]);
@@ -273,11 +275,12 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth)
 
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.min);
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.max);
-	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
+	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.min);
 	nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
 	if (nodes[node_idx].left == -1) {
 		cg_assert(nodes[node_idx].right == -1);
 	}
+	cg_assert(nodes[node_idx].aabb.is_valid());
 }
 
 /*
@@ -336,11 +339,37 @@ intersect_recursive(const Ray &ray, int idx, float *nearest_intersection, Inters
 
 	// This is an inner node. Recurse into child nodes.
 	else {
-		float t_min = FLT_MAX;
-		float t_max = -FLT_MAX;
-		nodes[n.left].aabb.intersect(ray,t_min,t_max);
-		std::cout << t_min <<"___"<< t_max << std::endl;
-		// TODO: Implement recursive traversal here.
+		auto tmin_l = -FLT_MAX;
+		auto tmin_r = -FLT_MAX;
+		auto tmax_l = FLT_MAX;
+		auto tmax_r = FLT_MAX;
+		bool isect_l = nodes[n.left].aabb.intersect(ray,tmin_l,tmax_l);
+		bool isect_r = nodes[n.right].aabb.intersect(ray,tmin_r,tmax_r);
+		if (isect_l || isect_r) {
+			// if both have been hit
+			if (isect_l && isect_r) {
+				bool hit = false;
+				if (tmin_l <= tmin_r) {
+					hit = intersect_recursive(ray,n.left,nearest_intersection,isect);
+				} else {
+					hit = intersect_recursive(ray,n.right,nearest_intersection,isect);
+				}
+				// if the nearer hasnt got an result
+				if (!hit) {
+					if (tmin_l < tmin_r) {
+						hit = intersect_recursive(ray,n.right,nearest_intersection,isect);
+					} else {
+						hit = intersect_recursive(ray,n.left,nearest_intersection,isect);
+					}
+				}
+				return hit;
+			}
+			// if only one has been hit
+			if (isect_l) {
+				return intersect_recursive(ray,n.left,nearest_intersection,isect);
+			}
+			return intersect_recursive(ray,n.right,nearest_intersection,isect);
+		}
 	}
 
 	return false;
@@ -348,3 +377,4 @@ intersect_recursive(const Ray &ray, int idx, float *nearest_intersection, Inters
 
 
 // CG_REVISION 8c58412a25ac2367c053bfa840ee81b320bdd315
+
