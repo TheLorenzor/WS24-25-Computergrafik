@@ -196,7 +196,6 @@ int BVH::reorder_triangles_median(
         diff /= 2;
         glm::vec3 end = aabb.min + diff;
         midPoints_along_axis.emplace_back(this->triangle_indices[i], end[axis]);
-
     }
     //sort
     std::sort(midPoints_along_axis.begin(), midPoints_along_axis.end(),
@@ -244,31 +243,28 @@ build_bvh(int node_idx, int first_triangle_idx, int num_triangles, int depth) {
     nodes[node_idx].right = -1;
     cg_assert(num_triangles>0);
 
-    if (num_triangles<=MAX_TRIANGLES_IN_LEAF) {
+    if (num_triangles <= MAX_TRIANGLES_IN_LEAF) {
         for (int i = first_triangle_idx; i < num_triangles + first_triangle_idx; ++i) {
-            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i]*3]);
-            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i]*3+1]);
-            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i]*3+2]);
+            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i] * 3]);
+            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i] * 3 + 1]);
+            nodes[node_idx].aabb.extend(triangle_soup.vertices[triangle_indices[i] * 3 + 2]);
         }
         return;
     }
 
     nodes.push_back(Node{});
     nodes.push_back(Node{});
-    nodes[node_idx].left = nodes.size() -2;
-    nodes[node_idx].right = nodes.size() -1;
-    int left_first_idx = this->reorder_triangles_median(first_triangle_idx,num_triangles,depth%3);
-    this->build_bvh(nodes[node_idx].left,first_triangle_idx,left_first_idx,depth+1);
-    this->build_bvh(nodes[node_idx].right,first_triangle_idx+left_first_idx,num_triangles-left_first_idx,depth+1);
+    nodes[node_idx].left = nodes.size() - 2;
+    nodes[node_idx].right = nodes.size() - 1;
+    int left_first_idx = this->reorder_triangles_median(first_triangle_idx, num_triangles, depth % 3);
+    this->build_bvh(nodes[node_idx].left, first_triangle_idx, left_first_idx, depth + 1);
+    this->build_bvh(nodes[node_idx].right, first_triangle_idx + left_first_idx, num_triangles - left_first_idx,
+                    depth + 1);
 
     nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.min);
     nodes[node_idx].aabb.extend(nodes[nodes[node_idx].right].aabb.max);
     nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.min);
     nodes[node_idx].aabb.extend(nodes[nodes[node_idx].left].aabb.max);
-
-
-
-
 }
 
 /*
@@ -330,6 +326,7 @@ intersect_recursive(const Ray& ray, int idx, float* nearest_intersection, Inters
         auto tmin_r = -FLT_MAX;
         auto tmax_l = FLT_MAX;
         auto tmax_r = FLT_MAX;
+
         bool isect_l = nodes[n.left].aabb.intersect(ray, tmin_l, tmax_l);
         bool isect_r = nodes[n.right].aabb.intersect(ray, tmin_r, tmax_r);
         if (isect_l || isect_r) {
