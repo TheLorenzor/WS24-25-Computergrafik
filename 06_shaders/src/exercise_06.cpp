@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cglib/core/image.h>
 
 #include <cglib/gl/scene_graph.h>
@@ -5,35 +6,57 @@
 
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
-
+#include <glm/gtx/string_cast.hpp>
+#include <math.h>
 /*
  * Create a sphere flake node and its 5 children. 
  * Recurse if number_of_remaining_recursions > 0.
  */
 std::shared_ptr<SceneGraphNode> buildSphereFlakeSceneGraph(
-	const std::shared_ptr<GLObjModel>& model, // the geometric model associated with this node (a sphere)
-	float sphere_model_radius,				  // the radius of the sphere in local coordinates (hint: should remain constant throughout the recursion)
-	float size_factor,						  // growth/shrink factor of the spheres for each recursion level 
-	int number_of_remaining_recursions)		  // the number of remaining recursions
+    const std::shared_ptr<GLObjModel>& model, // the geometric model associated with this node (a sphere)
+    float sphere_model_radius,
+    // the radius of the sphere in local coordinates (hint: should remain constant throughout the recursion)
+    float size_factor, // growth/shrink factor of the spheres for each recursion level
+    int number_of_remaining_recursions) // the number of remaining recursions
 {
-	// TODO: create root SceneGraphNode and set model
-	auto root = std::make_shared<SceneGraphNode>();
-	//root->model = ...;
+    // TODO: create root SceneGraphNode and set model
+    auto root = std::make_shared<SceneGraphNode>();
+    root->model = model;
 
-	// TODO: only create children if there are remaining recursions
+    // TODO: only create children if there are remaining recursions
+    if (number_of_remaining_recursions <= 0) {
+        return root;
+    }
+    std::vector<glm::vec3> directions = {
+        {1, 0, 0}, // +X
+        {-1, 0, 0}, // -X
+        {0, 0, 1}, // +z
+        {0, 0, -1}, // -z
+        {0, 1, 0}, // +y
+    };
+    // TODO: create 5 child nodes
+    for (int i = 0; i < 5; ++i) {
+        // TODO: create sphere flake sub graph for each child
+        auto subgraph = buildSphereFlakeSceneGraph(model,
+                                                   sphere_model_radius, size_factor*size_factor,
+                                                   number_of_remaining_recursions - 1);
 
-	// TODO: create 5 child nodes
-	for (int i = 0; i < 5; ++i)
-	{
-		// TODO: create sphere flake sub graph for each child
-		//auto subgraph = buildSphereFlakeSceneGraph(...);
+        // TODO: compute transformation matrix from the child node to the parent node (this function call's root node)
+        glm::mat4 translation = glm::translate(directions[i]*(sphere_model_radius+size_factor));
+        glm::vec3 scaling = glm::vec3(size_factor,size_factor,size_factor);
+        glm::mat4 scale = glm::scale(scaling);
 
-		// TODO: compute transformation matrix from the child node to the parent node (this function call's root node)
 
-		// TODO: add each subgraph to the children of this function call's root node
-	}
+        glm::vec3 direction = glm::vec3(directions[i].z,0,directions[i].x);
+        glm::mat4 rotate = glm::rotate(glm::half_pi<float>(),direction);
+        root->parent_to_node = translation*rotate*scale;
+        root->node_to_parent = glm::inverse(root->parent_to_node);
 
-	return root;
+        // TODO: add each subgraph to the children of this function call's root node
+        root->children.push_back(subgraph);
+    }
+
+    return root;
 }
 
 
@@ -42,36 +65,39 @@ std::shared_ptr<SceneGraphNode> buildSphereFlakeSceneGraph(
  * Recursivly computes the world transformation for each model.
  */
 void SceneGraphNode::collectTransformedModels(
-	std::vector<TransformedModel>& transformed_models, // list that contains all models when traversal is complete
-	const glm::mat4& parent_to_world,                  // the world transformation of the parent of this node
-	const glm::mat4& world_to_parent)                  // the inverse world transformation of this node's parent
-	const
-{
-	// TODO: compute node_to_world and world_to_node transformation matrices for this node
-	
-	// TODO: add this node's model to the list of transformed models
-	//transformed_models.push_back(TransformedModel(...));
+    std::vector<TransformedModel>& transformed_models, // list that contains all models when traversal is complete
+    const glm::mat4& parent_to_world, // the world transformation of the parent of this node
+    const glm::mat4& world_to_parent) // the inverse world transformation of this node's parent
+const {
+    // TODO: compute node_to_world and world_to_node transformation matrices for this node
+    glm::mat4 node_to_world =  this->node_to_parent*parent_to_world;
+    glm::mat4 world_to_node = world_to_parent* this->parent_to_node;
+    // TODO: add this node's model to the list of transformed models
+    transformed_models.push_back(    TransformedModel(node_to_world, world_to_node,this->model.get()));
 
-	// TODO: recursively transform and add the models of all children (subgraphs)
+    // TODO: recursively transform and add the models of all children (subgraphs)
+    for (auto& child : this->children) {
+        child->collectTransformedModels(transformed_models, world_to_node, world_to_node);
+    }
 }
 
 
 /*
- * Perform animation by traversing the scene graph recursively 
+ * Perform animation by traversing the scene graph recursively
  * and rotating each scene graph node around the y-axis (in object space).
- */ 
+ */
 void animateSphereFlake(
-	SceneGraphNode& node,  // the current node of the traversal
-	float angle_increment) // the incremental rotation angle
+    SceneGraphNode& node, // the current node of the traversal
+    float angle_increment) // the incremental rotation angle
 {
-	// TODO: compute incremental rotation matrix for the given node node
-	//glm::mat4 rotation = glm::rotate(glm::mat4(1.f), angle_increment, ...);
+    // TODO: compute incremental rotation matrix for the given node node
+    //glm::mat4 rotation = glm::rotate(glm::mat4(1.f), angle_increment, ...);
 
-	// TODO: compute the parent-relative transformation matrices for this node
-	//node.node_to_parent = ...
-	//node.parent_to_node = ...
+    // TODO: compute the parent-relative transformation matrices for this node
+    //node.node_to_parent = ...
+    //node.parent_to_node = ...
 
-	// TODO: recursively animate child subgraphs
+    // TODO: recursively animate child subgraphs
 }
 
 
@@ -80,31 +106,30 @@ void animateSphereFlake(
  * illumination for the given environment map
  */
 std::shared_ptr<Image>
-prefilter_environment_diffuse(Image const& img)
-{
-	const int width = img.getWidth();
-	const int height = img.getHeight();
-	auto filtered = std::make_shared<Image>(width, height);
+prefilter_environment_diffuse(Image const& img) {
+    const int width = img.getWidth();
+    const int height = img.getHeight();
+    auto filtered = std::make_shared<Image>(width, height);
 
-	// For all texels in the envmap...
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			// TODO: compute normal direction
+    // For all texels in the envmap...
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            // TODO: compute normal direction
 
-			// ... integrate over all incident directions.
-			for (int dy = 0; dy < height; ++dy) {
-				for (int dx = 0; dx < width; ++dx) {
-					// TODO: compute incident direction
-					// TODO: accumulate samples
-				}
-			}
+            // ... integrate over all incident directions.
+            for (int dy = 0; dy < height; ++dy) {
+                for (int dx = 0; dx < width; ++dx) {
+                    // TODO: compute incident direction
+                    // TODO: accumulate samples
+                }
+            }
 
-			// TODO: write filtered value
-			//filtered->setPixel(...);
-		}
-	}
+            // TODO: write filtered value
+            //filtered->setPixel(...);
+        }
+    }
 
-	return filtered;
+    return filtered;
 }
 
 /*
@@ -113,32 +138,32 @@ prefilter_environment_diffuse(Image const& img)
  * phong exponent
  */
 std::shared_ptr<Image>
-prefilter_environment_specular(Image const& img, float n)
-{
-	const int width = img.getWidth();
-	const int height = img.getHeight();
+prefilter_environment_specular(Image const& img, float n) {
+    const int width = img.getWidth();
+    const int height = img.getHeight();
 
-	auto filtered = std::make_shared<Image>(width, height);
+    auto filtered = std::make_shared<Image>(width, height);
 
-	// For all texels in the envmap...
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			// TODO: compute reflection direction
+    // For all texels in the envmap...
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            // TODO: compute reflection direction
 
-			// ... integrate over all incident directions.
-			for (int dy = 0; dy < height; ++dy) {
-				for (int dx = 0; dx < width; ++dx) {
-					// TODO: compute incident direction
+            // ... integrate over all incident directions.
+            for (int dy = 0; dy < height; ++dy) {
+                for (int dx = 0; dx < width; ++dx) {
+                    // TODO: compute incident direction
 
-					// TODO: accumulate samples
-				}
-			}
+                    // TODO: accumulate samples
+                }
+            }
 
-			// TODO: write filtered value
-			//filtered->setPixel(...);
-		}
-	}
+            // TODO: write filtered value
+            //filtered->setPixel(...);
+        }
+    }
 
-	return filtered;
+    return filtered;
 }
+
 // CG_REVISION d4ab32bd208749f2d2b1439e25d16e642b039298
