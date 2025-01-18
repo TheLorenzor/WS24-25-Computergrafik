@@ -7,7 +7,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtx/string_cast.hpp>
-#include <math.h>
+
 /*
  * Create a sphere flake node and its 5 children. 
  * Recurse if number_of_remaining_recursions > 0.
@@ -91,13 +91,16 @@ void animateSphereFlake(
     float angle_increment) // the incremental rotation angle
 {
     // TODO: compute incremental rotation matrix for the given node node
-    //glm::mat4 rotation = glm::rotate(glm::mat4(1.f), angle_increment, ...);
+    glm::mat4 rotation = glm::rotate(angle_increment, glm::vec3(0,1,0));
 
     // TODO: compute the parent-relative transformation matrices for this node
-    //node.node_to_parent = ...
-    //node.parent_to_node = ...
+    node.node_to_parent = rotation*node.node_to_parent;
+    node.parent_to_node = node.node_to_parent * rotation;
 
     // TODO: recursively animate child subgraphs
+    for (auto& child : node.children) {
+        animateSphereFlake(*child,angle_increment);
+    }
 }
 
 
