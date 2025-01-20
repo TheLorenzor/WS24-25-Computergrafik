@@ -22,8 +22,9 @@ void
 main()
 {
 	// TODO: read k_d from texture
-	//vec3 k_d = ...
-	
+	vec4 frag = texture(tex,tex_coord);
+	vec3 k_d =frag.xyz;
+
 	// TODO: iterate over all lights and accumulate illumination
 	// according the the phong illumination model on the exercise sheet
 	//for (int i = 0; i < light_count; ++i)

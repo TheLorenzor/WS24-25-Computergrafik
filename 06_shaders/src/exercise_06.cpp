@@ -39,13 +39,13 @@ std::shared_ptr<SceneGraphNode> buildSphereFlakeSceneGraph(
     for (int i = 0; i < 5; ++i) {
         // TODO: create sphere flake sub graph for each child
         auto subgraph = buildSphereFlakeSceneGraph(model,
-                                                   sphere_model_radius, size_factor,
+                                                   sphere_model_radius, size_factor*size_factor,
                                                    number_of_remaining_recursions);
 
         // TODO: compute transformation matrix from the child node to the parent node (this function call's root node)
         glm::mat4 translation = glm::translate(directions[i]*(sphere_model_radius+size_factor));
         glm::mat4 scale = glm::scale(glm::vec3(size_factor));
-        glm::vec3 rot_direction = glm::vec3(directions[i].z,directions[i].y,directions[i].x);
+        glm::vec3 rot_direction = glm::vec3(-directions[i].z,directions[i].y,-directions[i].x);
         glm::mat4 rotate = glm::rotate(glm::half_pi<float>(),rot_direction);
         subgraph->node_to_parent =translation*rotate*scale;
         subgraph->parent_to_node = glm::inverse(subgraph->node_to_parent);
