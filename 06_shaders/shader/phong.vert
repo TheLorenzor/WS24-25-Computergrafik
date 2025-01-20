@@ -16,8 +16,13 @@ void
 main()
 {
 	// TODO: correctly set gl_Position, world_position, world_normal_interpolated, tex_coord
-	gl_Position = vec4(100.0, 100.0, 100.0, 1.0);
+	gl_Position = MVP * vec4(POSITION, 1.0);
+	vec4 local_pos = vec4(POSITION,1);
+	local_pos = model_matrix * local_pos;
 	world_normal_interpolated = vec3(1.0);
-	world_position = vec3(0.0);
-	tex_coord = vec2(0.0);
+
+	world_normal_interpolated = normal_matrix * NORMAL;
+
+	world_position = vec3(local_pos.x/local_pos.w,local_pos.y/local_pos.w,local_pos.z / local_pos.w);
+	tex_coord = TEXCOORD;
 }

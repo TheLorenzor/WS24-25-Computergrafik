@@ -6,7 +6,7 @@
 
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
-#include <glm/gtx/string_cast.hpp>
+#include <glm/gtx/io.hpp>
 
 /*
  * Create a sphere flake node and its 5 children. 
@@ -35,22 +35,20 @@ std::shared_ptr<SceneGraphNode> buildSphereFlakeSceneGraph(
         {0, 1, 0}, // +y
     };
     // TODO: create 5 child nodes
+    number_of_remaining_recursions--;
     for (int i = 0; i < 5; ++i) {
         // TODO: create sphere flake sub graph for each child
         auto subgraph = buildSphereFlakeSceneGraph(model,
-                                                   sphere_model_radius, size_factor*size_factor,
-                                                   number_of_remaining_recursions - 1);
+                                                   sphere_model_radius, size_factor,
+                                                   number_of_remaining_recursions);
 
         // TODO: compute transformation matrix from the child node to the parent node (this function call's root node)
         glm::mat4 translation = glm::translate(directions[i]*(sphere_model_radius+size_factor));
-        glm::vec3 scaling = glm::vec3(size_factor,size_factor,size_factor);
-        glm::mat4 scale = glm::scale(scaling);
-
-
-        glm::vec3 direction = glm::vec3(directions[i].z,0,directions[i].x);
-        glm::mat4 rotate = glm::rotate(glm::half_pi<float>(),direction);
-        root->parent_to_node = translation*rotate*scale;
-        root->node_to_parent = glm::inverse(root->parent_to_node);
+        glm::mat4 scale = glm::scale(glm::vec3(size_factor));
+        glm::vec3 rot_direction = glm::vec3(directions[i].z,directions[i].y,directions[i].x);
+        glm::mat4 rotate = glm::rotate(glm::half_pi<float>(),rot_direction);
+        subgraph->node_to_parent =translation*rotate*scale;
+        subgraph->parent_to_node = glm::inverse(subgraph->node_to_parent);
 
         // TODO: add each subgraph to the children of this function call's root node
         root->children.push_back(subgraph);
@@ -70,11 +68,13 @@ void SceneGraphNode::collectTransformedModels(
     const glm::mat4& world_to_parent) // the inverse world transformation of this node's parent
 const {
     // TODO: compute node_to_world and world_to_node transformation matrices for this node
-    glm::mat4 node_to_world =  this->node_to_parent*parent_to_world;
-    glm::mat4 world_to_node = world_to_parent* this->parent_to_node;
+    glm::mat4 node_to_world =  this->node_to_parent* parent_to_world;
+    glm::mat4 world_to_node = world_to_parent * this->parent_to_node;
+    //std::cout <<this->node_to_parent << std::endl;
+    //std::cout << "---------------------------------------" << std::endl;
+
     // TODO: add this node's model to the list of transformed models
     transformed_models.push_back(    TransformedModel(node_to_world, world_to_node,this->model.get()));
-
     // TODO: recursively transform and add the models of all children (subgraphs)
     for (auto& child : this->children) {
         child->collectTransformedModels(transformed_models, world_to_node, world_to_node);
@@ -95,7 +95,7 @@ void animateSphereFlake(
 
     // TODO: compute the parent-relative transformation matrices for this node
     node.node_to_parent = rotation*node.node_to_parent;
-    node.parent_to_node = node.node_to_parent * rotation;
+    node.parent_to_node = glm::transpose(node.node_to_parent);
 
     // TODO: recursively animate child subgraphs
     for (auto& child : node.children) {

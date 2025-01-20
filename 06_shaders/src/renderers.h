@@ -100,7 +100,7 @@ private:
 	std::shared_ptr<SceneGraphNode> sceneGraphRoot;
 	std::shared_ptr<GLObjModel> sphereModel;
 	float animationSpeedFactor = 0.1f;
-	int sphere_flake_recursion_depth = 3;
+	int sphere_flake_recursion_depth = 0;
 	float sphere_flake_size_factor = 0.5f;
 
 	std::vector<TransformedModel> transformedRenderingObjects;
