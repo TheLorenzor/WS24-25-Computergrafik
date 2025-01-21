@@ -22,15 +22,27 @@ void
 main()
 {
 	// TODO: read k_d from texture
-	vec4 frag = texture(tex,tex_coord);
-	vec3 k_d =frag.xyz;
-
+	vec4 k_d = texture(tex,tex_coord);
+	frag_color = vec4(0.0,0.0,0.0,1.0);
 	// TODO: iterate over all lights and accumulate illumination
 	// according the the phong illumination model on the exercise sheet
-	//for (int i = 0; i < light_count; ++i)
-	//{
-	//   ...
-	//}
-	
-	frag_color = vec4(1.0);
+	for (int i = 0; i < light_count; ++i)
+	{
+		vec3 L = normalize(light_world_pos[i]-world_position);
+		vec3 N = normalize(world_normal_interpolated);
+		//kd calcualtion
+		vec4 k_ds = k_d * max(0,dot(L,N));
+
+
+		vec3 m_V =world_position-cam_world_pos;
+		vec3 R = reflect(m_V,world_normal_interpolated);
+		vec3 kss = k_s * pow(max(0,dot(R,L)),2);
+		vec3 x = light_world_pos[i]-world_position;
+		float i_x = light_intensity[i].x / pow(x.x,2);
+		float i_y = light_intensity[i].y / pow(x.y,2);
+		float i_z = light_intensity[i].z / pow(x.z,2);
+		vec3 I = vec3(i_x,i_y,i_z);
+		frag_color =frag_color+ (k_ds+vec4(kss,0.0))*vec4(I,0.0);
+	}
+
 }
