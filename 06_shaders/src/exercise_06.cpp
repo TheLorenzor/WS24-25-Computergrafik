@@ -34,7 +34,7 @@ std::shared_ptr<SceneGraphNode> buildSphereFlakeSceneGraph(
         {0, 0, -1}, // -z
         {0, 1, 0}, // +y
     };
-    // TODO: create 5 child nodes
+    // TODO: cr eate 5 child nodes
     number_of_remaining_recursions--;
     for (int i = 0; i < 5; ++i) {
         // TODO: create sphere flake sub graph for each child
@@ -104,6 +104,14 @@ void animateSphereFlake(
 }
 
 
+glm::vec3 getDirection(float s, float t) {
+    float h_x =2*s-1;
+    float h_y = 2*t-1;
+    float h_z = glm::pow(h_x,2)-glm::pow(h_y,2);
+    return glm::normalize(glm::vec3(h_x,h_y,glm::sqrt(1-h_z)));
+
+}
+
 /*
  * compute a prefiltered environment map for diffuse
  * illumination for the given environment map
@@ -113,22 +121,28 @@ prefilter_environment_diffuse(Image const& img) {
     const int width = img.getWidth();
     const int height = img.getHeight();
     auto filtered = std::make_shared<Image>(width, height);
-
+    glm::vec2 img_size = glm::vec2(width, height);
     // For all texels in the envmap...
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             // TODO: compute normal direction
-
+            float s = x/ static_cast<float>(width);
+            float t = y / static_cast<float>(height);
+            glm::vec3 n = getDirection(s,t);
             // ... integrate over all incident directions.
+            glm::vec4 color = glm::vec4(0.0);
             for (int dy = 0; dy < height; ++dy) {
                 for (int dx = 0; dx < width; ++dx) {
-                    // TODO: compute incident direction
-                    // TODO: accumulate samples
+                    float u = dx/ static_cast<float>(width);
+                    float v = dy/ static_cast<float>(height);
+                    glm::vec3 r = getDirection(u,v);
+                    glm::vec2 uv = getDirection(u,v);
+
+                    color += img.getPixel(dx,dy) * glm::max(0.f,glm::dot(n,r))*solid_angle_from_lonlat_coord(uv,img_size);
                 }
             }
 
-            // TODO: write filtered value
-            //filtered->setPixel(...);
+            filtered->setPixel(x,y,color);
         }
     }
 
@@ -146,23 +160,32 @@ prefilter_environment_specular(Image const& img, float n) {
     const int height = img.getHeight();
 
     auto filtered = std::make_shared<Image>(width, height);
+    glm::vec2 img_size = glm::vec2(width, height);
 
     // For all texels in the envmap...
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             // TODO: compute reflection direction
-
+            float s = x/ static_cast<float>(width);
+            float t = y / static_cast<float>(height);
+            glm::vec3 normal = getDirection(s,t);
+            glm::vec4 color = glm::vec4(0.f);
             // ... integrate over all incident directions.
             for (int dy = 0; dy < height; ++dy) {
                 for (int dx = 0; dx < width; ++dx) {
                     // TODO: compute incident direction
+                    float u = dx/ static_cast<float>(width);
+                    float v = dy/ static_cast<float>(height);
+                    glm::vec3 r = getDirection(u,v);
+                    glm::vec2 uv = getDirection(u,v);
 
+                    color += img.getPixel(dx,dy) * glm::pow(glm::max(0.f,glm::dot(normal,r)),n)*solid_angle_from_lonlat_coord(uv,img_size);
                     // TODO: accumulate samples
                 }
             }
 
             // TODO: write filtered value
-            //filtered->setPixel(...);
+            filtered->setPixel(x,y,color);
         }
     }
 

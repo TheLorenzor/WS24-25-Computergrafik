@@ -15,5 +15,10 @@ out vec4 frag_color;
 void main (void)
 {
 	// TODO: compute lighting using the prefiltered environment maps
-	frag_color = vec4(1.);
+	vec3 v_0 = normalize(world_position-cam_world_pos);
+	vec3 r   = normalize(reflect(v_0,world_normal_interpolated));
+	vec4 l_d = texture(EnvironmentTextureDiffuse,world_normal_interpolated);
+	vec4 l_s = texture(EnvironmentTextureGlossy,r);
+	frag_color = vec4(l_d.x*diffuse_color.x,l_d.y*diffuse_color.y,l_d.z*diffuse_color.z,l_d.w);
+	frag_color = frag_color + vec4(l_s.x*specular_color.x,l_s.y*specular_color.y,l_s.z*specular_color.z,l_s.w);
 }

@@ -22,6 +22,7 @@ void
 main()
 {
 	// TODO: read k_d from texture
+
 	vec4 k_d = texture(tex,tex_coord);
 	// TODO: iterate over all lights and accumulate illumination
 	// according the the phong illumination model on the exercise sheet
