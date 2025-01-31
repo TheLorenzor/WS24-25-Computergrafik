@@ -53,7 +53,10 @@ void main (void)
 	// TODO: determine visibility for the fragment
 	float closest_depth = texture(shadow_map,proj_coords.xy).r;
 	float current_depth = proj_coords.z;
-	float visibility =  (current_depth - shadow_bias) > closest_depth ? 0.0 : 1.0;
+	float visibility = 0.0;
+	if  ((current_depth - shadow_bias) <= closest_depth) {
+		visibility = 1.0;
+	}
 
 	vec3 color = vec3(0);
 	if (visibility > 0.0) {
