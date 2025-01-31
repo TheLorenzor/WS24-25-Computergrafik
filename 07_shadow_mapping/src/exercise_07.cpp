@@ -12,13 +12,12 @@ compute_view_projection_light(
 		float field_of_view,              // field of view in radians
 		const glm::vec3 &up_vector)       // vector pointing upwards in world space
 {
-	// TODO: compute the View Projection Matrix for the light source
-	return glm::mat4(
-		-0.3815766573f, -1.5737097263f, -1.0113990307f, -0.7416926026f,
-		0.0000000000f, 1.8133978844f, -0.9002042413f, -0.6601497531f,
-		-2.3838677406f, 0.2518977523f, 0.1618907899f, 0.1187199131f,
-		-1.8690603971f, -5.7146315575f, 11.0477218628f, 25.4349956512f
-	);
+
+
+	glm::mat4 view_matrix = glm::lookAt(light_position, light_position + light_direction, up_vector);
+	glm::mat4 projection_matrix = glm::perspective(field_of_view, 1.0f, near_clip_plane, far_clip_plane);
+
+	return projection_matrix * view_matrix;
 }
 
 void

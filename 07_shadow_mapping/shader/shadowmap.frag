@@ -47,9 +47,13 @@ shade(vec3 world_normal,
 void main (void)
 {
 	// TODO: project position in light space
+	vec3 proj_coords = pos_shadowmap_space.xyz / pos_shadowmap_space.w;
+	proj_coords = proj_coords *0.5 +0.5;
 
 	// TODO: determine visibility for the fragment
-	float visibility = 1.0;
+	float closest_depth = texture(shadow_map,proj_coords.xy).r;
+	float current_depth = proj_coords.z;
+	float visibility =  (current_depth - shadow_bias) > closest_depth ? 0.0 : 1.0;
 
 	vec3 color = vec3(0);
 	if (visibility > 0.0) {
