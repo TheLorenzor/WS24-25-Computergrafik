@@ -25,6 +25,8 @@ initialize_alpha_blending()
 {
 	// TODO: Set up the blend equation and blend function for 
 	// alpha blending.
+	glBlendEquation(GL_FUNC_ADD);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void
@@ -32,6 +34,9 @@ initialize_additive_blending()
 {
 	// TODO: Set up the blend equation and blend function for 
 	// additive blending.
+	glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_ONE);
+	glBlendEquation(GL_FUNC_ADD);
+
 }
 
 void
@@ -39,6 +44,8 @@ initialize_premultiplied_blending()
 {
 	// TODO: Set up the blend equation and blend function for 
 	// blending with premultiplied alpha.
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendEquation(GL_FUNC_ADD);
 }
 
 // CG_REVISION d4ab32bd208749f2d2b1439e25d16e642b039298
