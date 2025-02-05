@@ -83,8 +83,16 @@ void main (void)
 
 	// TODO: compute light absorption by the volume below the water surface
 	// for the underwater segments of both the camera and the sun light rays
-	float underwater_camray_length = 0.0; // compute sth. sensible
-	float underwater_sun_lightray_length = 0.0; // compute sth. sensible
+
+
+	float height_diff =  water_height-world_position.y;
+	float height_cam_diff = normalize(cam_world_pos-world_position).y- world_position.y;
+	float height_light_diff = normalize(sun_world_dir-world_position).y;
+	float underwater_camray_length = abs(height_diff/height_cam_diff); // compute sth. sensible
+	float underwater_sun_lightray_length = abs(height_diff/height_light_diff); // compute sth. sensible
+	if (height_diff>0.0) {
+		color = exp(-water_transmission_coeff * (underwater_camray_length+underwater_sun_lightray_length))*color;
+	}
 
 	// OPTIONAL: handle camera under water
 	if (under_water) {
