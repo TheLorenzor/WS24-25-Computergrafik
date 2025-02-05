@@ -38,7 +38,7 @@ void main(void)
 
 	vec3 p = vec3(grid_coord.x+1,h_x_p1,grid_coord.y) - vec3(grid_coord.x-1,h_x_m1,grid_coord.y);
 	vec3 q = vec3(grid_coord.x,h_y_p1,grid_coord.y+1) - vec3(grid_coord.x-1,h_y_m1,grid_coord.y-1);
-	vec3 local_normal = normalize(cross(p,q));
+	vec3 local_normal = cross(q,p);
 
 	// TODO: transform from terrain space to required spaces
 	vec4 globPos = model_matrix*vec4(local_position,1.0);
