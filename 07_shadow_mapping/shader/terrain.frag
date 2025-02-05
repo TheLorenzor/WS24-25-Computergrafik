@@ -51,9 +51,19 @@ void main (void)
 		? color_varied(RockTex, 0.05 * world_position.xz).rgb 
 		: vec3(0.65f);
 
+
+	float sinval = sqrt(1-pow(dot(n,vec3(0,1,0)),2));
+	float value = smoothstep(min_rock_threshold,min_rock_threshold+rock_blend_margin,sinval);
 	vec3 color = rock_color;
-	// TODO: blend color textures
-	
+	color = rock_color * value+ grass_color* (1-value);
+	float blend_alpha =world_position.y-(water_height+beach_margin);
+	if (blend_alpha <= 0.0 ) {
+		color = sand_color;
+	}
+	if (blend_alpha <= 1.0 && blend_alpha >0.0) {
+		color = sand_color*(1-blend_alpha)+ blend_alpha*color;
+	}
+
 	// fake ambient occlusion
 	vec2 heightmap_tex_coord = (grid_coord + vec2(.5)) 
 		                     * one_over_height_map_size;
