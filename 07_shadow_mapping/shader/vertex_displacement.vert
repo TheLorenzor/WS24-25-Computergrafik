@@ -25,15 +25,24 @@ void main(void)
 	// position in local terrain space
 	float height = texture(HeightMap,grid_coord*one_over_height_map_size).r * height_scaling;
 	// TODO: compute vertically displaced position in local terrain space
-	vec3 local_position = vec3(grid_coord.x, height, grid_coord.y);
+	vec3 local_position = vec3(grid_coord.x, grid_coord.y,height);
 
-	// normal in local terrain space
-	vec3 local_normal = inverse(normal_matrix)* world_normal_interpolated;
+	vec2 x_m1 = vec2(grid_coord.x-1,grid_coord.y);
+	vec2 x_p1 = vec2(grid_coord.x+1,grid_coord.y);
+	vec2 y_p1 = vec2(grid_coord.x,grid_coord.y+1);
+	vec2 y_m1 = vec2(grid_coord.x,grid_coord.y-1);
+	float h_x_m1 = texture(HeightMap,x_m1*one_over_height_map_size).r * height_scaling;
+	float h_x_p1 = texture(HeightMap,x_p1*one_over_height_map_size).r * height_scaling;
+	float h_y_m1 = texture(HeightMap,y_m1*one_over_height_map_size).r * height_scaling;
+	float h_y_p1 = texture(HeightMap,y_p1*one_over_height_map_size).r * height_scaling;
 
-	// TODO: compute the actual normal of the displaced surface in local terrain space
+	vec3 p = vec3(grid_coord.x+1,grid_coord.y,h_x_p1) - vec3(grid_coord.x-1,grid_coord.y,h_x_m1);
+	vec3 q = vec3(grid_coord.x,grid_coord.y+1,h_y_p1) - vec3(grid_coord.x-1,grid_coord.y-1,h_y_m1);
+	vec3 local_normal = normalize(cross(p,q));
 
 	// TODO: transform from terrain space to required spaces
-	gl_Position = MVP*local_position; // do sth. sensible
-	world_position = local_position; // do sth. sensible
-	world_normal_interpolated = local_normal; // do sth. sensible here
+	vec4 globPos = model_matrix*vec4(local_position,1.0);
+	gl_Position = MVP * vec4(local_position,1.0); // do sth. sensible
+	world_position = globPos.xyz/ globPos.w; // do sth. sensible
+	world_normal_interpolated = normal_matrix*local_normal; // do sth. sensible here
 }
