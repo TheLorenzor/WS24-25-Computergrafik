@@ -23,17 +23,17 @@ void main(void)
 	grid_coord = POSITION + instanced_patch_size * vec2(gl_InstanceID & instanced_patch_mask_and_shift.x, gl_InstanceID >> instanced_patch_mask_and_shift.y);
 
 	// position in local terrain space
-	vec3 local_position = vec3(grid_coord.x, 0.0, grid_coord.y);
-
+	float height = texture(HeightMap,grid_coord*one_over_height_map_size).r * height_scaling;
 	// TODO: compute vertically displaced position in local terrain space
+	vec3 local_position = vec3(grid_coord.x, height, grid_coord.y);
 
 	// normal in local terrain space
-	vec3 local_normal = vec3(0.0, 1.0, 0.0);
+	vec3 local_normal = inverse(normal_matrix)* world_normal_interpolated;
 
 	// TODO: compute the actual normal of the displaced surface in local terrain space
 
 	// TODO: transform from terrain space to required spaces
-	gl_Position = vec4(100.0); // do sth. sensible
-	world_position = vec3(100.0); // do sth. sensible
-	world_normal_interpolated = vec3(100.0); // do sth. sensible here
+	gl_Position = MVP*local_position; // do sth. sensible
+	world_position = local_position; // do sth. sensible
+	world_normal_interpolated = local_normal; // do sth. sensible here
 }
