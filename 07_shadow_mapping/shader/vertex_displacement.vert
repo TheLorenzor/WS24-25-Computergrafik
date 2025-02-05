@@ -25,7 +25,7 @@ void main(void)
 	// position in local terrain space
 	float height = texture(HeightMap,grid_coord*one_over_height_map_size).r * height_scaling;
 	// TODO: compute vertically displaced position in local terrain space
-	vec3 local_position = vec3(grid_coord.x, grid_coord.y,height);
+	vec3 local_position = vec3(grid_coord.x, height,grid_coord.y);
 
 	vec2 x_m1 = vec2(grid_coord.x-1,grid_coord.y);
 	vec2 x_p1 = vec2(grid_coord.x+1,grid_coord.y);
@@ -36,8 +36,8 @@ void main(void)
 	float h_y_m1 = texture(HeightMap,y_m1*one_over_height_map_size).r * height_scaling;
 	float h_y_p1 = texture(HeightMap,y_p1*one_over_height_map_size).r * height_scaling;
 
-	vec3 p = vec3(grid_coord.x+1,grid_coord.y,h_x_p1) - vec3(grid_coord.x-1,grid_coord.y,h_x_m1);
-	vec3 q = vec3(grid_coord.x,grid_coord.y+1,h_y_p1) - vec3(grid_coord.x-1,grid_coord.y-1,h_y_m1);
+	vec3 p = vec3(grid_coord.x+1,h_x_p1,grid_coord.y) - vec3(grid_coord.x-1,h_x_m1,grid_coord.y);
+	vec3 q = vec3(grid_coord.x,h_y_p1,grid_coord.y+1) - vec3(grid_coord.x-1,h_y_m1,grid_coord.y-1);
 	vec3 local_normal = normalize(cross(p,q));
 
 	// TODO: transform from terrain space to required spaces
