@@ -57,16 +57,20 @@ void main (void)
 		compute_attenuated_reflection_dir(world_normal, cam_world_pos, cam_dir);
 
 	// TODO: transform reflection_lookup_dir to homogeneous reflection map space,
+	vec4 local = RVP_to_tex * vec4(reflection_lookup_dir,1.0);
 	// perform dehomogenization,
+	vec3 dehomog = local.xyz / local.w;
 	// and look up the reflected light in the reflection map
-	vec3 reflected_light = vec3(0.5);
+	vec4 reflected_light = texture(ReflectionMap,dehomog.xy);
 
 	float reflectivity = 0.5;
 	if(enable_fresnel > 0) {
 		// TODO: compute reflectivity using Schlick's approximation
-		// reflectivity = ...
+		float cos_theta = clamp(dot(-cam_dir, world_normal), 0.0, 1.0);
+		float R0 = 0.02; // Approximate R0 for water-air interface
+		reflectivity = R0 + (1.0 - R0) * pow(1.0 - cos_theta, 5.0);
 	}
-	
+
 	// TODO: compute additive light and multiplicative blend factor
 	// using the computed reflectivity, the looked-up reflected light
 	// and the water surface transmission color
@@ -75,8 +79,10 @@ void main (void)
 	// reflectivity coefficient in add_color.w, in which case we
 	// may be able to give you more points when some part of the
 	// calculation is wrong.
-	add_color = vec4(0.0); // do sth. sensible here
-	mul_color = vec4(smoothstep(0.97, 1.1, world_normal.y)); // do sth. sensible here
+
+
+	add_color = vec4(reflected_light.xyz * reflectivity, reflectivity); // do sth. sensible here
+	mul_color = vec4(surface_transmission_color,1.0); // do sth. sensible here
 	
 	// OPTIONAL: handle camera under water
 	if (cam_world_pos.y < water_height)
